@@ -9,35 +9,6 @@ This is the `LoginPage.xaml` UI layout for the **ARProject**, built using **.NET
 * MVVM Architecture
 * MAUI Borders (instead of Frame)
 
-## 🖼 UI Features
-
-* Rounded logo at the top center (e.g., `logo.jpg` or `.webp`)
-* Clean input field for email entry
-* Separator with "- OR Continue with -"
-* Social login buttons (Google, Apple, Facebook)
-* Navigation to Sign Up page via `TapGestureRecognizer`
-* "Next" and "Cancel" buttons styled with modern colors and rounded edges
-
-## 📂 Image Requirements
-
-Ensure the following images are added to the `Resources/Images/` folder and marked as `MauiImage`:
-
-* `logo.jpg` (or `logo.webp`)
-* `icon_google.png`
-* `icon_apple.png`
-* `icon_facebook.png`
-
-## 🚀 Usage
-
-In `App.xaml.cs`, to display this page on startup:
-
-```csharp
-protected override Window CreateWindow(IActivationState? activationState)
-{
-    return new Window(new LoginPage());
-}
-```
-
 ## 📌 Notes
 
 * Supports `ScrollView` to avoid UI cutoff on small screens or when keyboard is shown
@@ -51,7 +22,5 @@ protected override Window CreateWindow(IActivationState? activationState)
 * Implement persistent login state and navigation to `AppShell` after login
 
 ---
-
-**Author:** *Your Name Here*
 
 Feel free to update this README as the project evolves.
