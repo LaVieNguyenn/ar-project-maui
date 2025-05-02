@@ -1,4 +1,4 @@
-# Login Page - ARProject (.NET MAUI)
+# AR Clothing Project (.NET MAUI)
 
 This is the `LoginPage.xaml` UI layout for the **ARProject**, built using **.NET MAUI (.NET 9)**. It provides a modern, responsive login interface designed for mobile-first AR applications.
 
