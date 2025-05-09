@@ -1,157 +1,192 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:triggers="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="ARProject.Views.LoginPage"
+             xmlns:vw="clr-namespace:ARProject.ViewModels"
+             x:DataType="vw:LoginViewModel"
              Title="Login"
              BackgroundColor="White"
-             Padding="20">
-    <ScrollView>
-        <VerticalStackLayout Spacing="24" VerticalOptions="Center">
+             Padding="20"
+             Shell.NavBarIsVisible="False">
 
-            <!-- Logo Circle -->
-            <Border
-        WidthRequest="100"
-        HeightRequest="100"
-        Stroke="LightGray"
-        StrokeThickness="1"
-        BackgroundColor="#F2F2F2"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"
-        StrokeShape="RoundRectangle 50">
-                <Image Source="logo_demo.webp" Aspect="AspectFill" />
-            </Border>
+    <Grid RowDefinitions="Auto, Auto, *, Auto">
+        <ActivityIndicator IsVisible="{Binding IsLoading}"
+                           IsRunning="{Binding IsLoading}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Grid.RowSpan="4" />
 
-            <!-- Title -->
-            <Label
-        Text="Login"
-        FontSize="38"
-        FontAttributes="Bold"
-        TextColor="#111111"
-        HorizontalOptions="Start"/>
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Spacing="24" VerticalOptions="Center">
 
-            <!-- Subtitle -->
-            <Label
-        Text="Good to see you back!"
-        FontSize="14"
-        TextColor="#666666"
-        HorizontalOptions="Start" />
-
-            <!-- Email Entry -->
-            <Border
-        BackgroundColor="#F2F2F2"
-        StrokeThickness="0"
-        HeightRequest="50"
-        StrokeShape="RoundRectangle 25">
-                <Entry
-          Placeholder="Email"
-          VerticalOptions="Center"
-          Margin="16,0"
-          BackgroundColor="Transparent"
-          Keyboard="Email" />
-            </Border>
-
-            <!-- OR Separator -->
-            <HorizontalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center">
-                <BoxView
-          WidthRequest="50"
-          HeightRequest="1"
-          BackgroundColor="#CCCCCC"
-          VerticalOptions="Center" />
-                <Label
-          Text="   OR Continue with  "
-          FontSize="12"
-          TextColor="#999999" />
-                <BoxView
-          WidthRequest="50"
-          HeightRequest="1"
-          BackgroundColor="#CCCCCC"
-          VerticalOptions="Center" />
-            </HorizontalStackLayout>
-
-            <!-- Social Buttons -->
-            <HorizontalStackLayout
-        Spacing="16"
-        HorizontalOptions="Center">
-
+                <!-- Logo Circle -->
                 <Border
-          WidthRequest="48"
-          HeightRequest="48"
-          Stroke="Gray"
-          StrokeThickness="1"
-          StrokeShape="RoundRectangle 24">
-                    <Image Source="google_logo.webp"
-                 Aspect="AspectFit"/>
+       WidthRequest="100"
+       HeightRequest="100"
+       Stroke="LightGray"
+       StrokeThickness="1"
+       BackgroundColor="#F2F2F2"
+       HorizontalOptions="Center"
+       VerticalOptions="Center"
+       StrokeShape="RoundRectangle 50">
+                    <Image Source="logo_demo.webp" Aspect="AspectFill" />
                 </Border>
 
+                <!-- Title -->
+                <Label
+       Text="Login"
+       FontSize="38"
+       FontAttributes="Bold"
+       TextColor="#111111"
+       HorizontalOptions="Start"/>
+
+                <!-- Subtitle -->
+                <Label
+       Text="Good to see you back!"
+       FontSize="14"
+       TextColor="#666666"
+       HorizontalOptions="Start" />
+
+                <!-- Email Entry -->
                 <Border
-          WidthRequest="48"
-          HeightRequest="48"
-          Stroke="Gray"
-          StrokeThickness="1"
-          StrokeShape="RoundRectangle 24">
-                    <Image Source="apple_logo.jpg"
-                 Aspect="AspectFit"
-                           HeightRequest="134"
-                           WidthRequest="100"
-                           />
+       BackgroundColor="#F2F2F2"
+       StrokeThickness="0"
+       HeightRequest="50"
+       StrokeShape="RoundRectangle 25">
+                    <Entry
+         Placeholder="Email"
+         VerticalOptions="Center"
+         Margin="16,0"
+         BackgroundColor="Transparent"
+         Text="{Binding Email, Mode=TwoWay}"
+         Keyboard="Email"
+         ClearButtonVisibility="WhileEditing"/>
                 </Border>
 
+                <!-- Password Entry -->
                 <Border
-          WidthRequest="48"
-          HeightRequest="48"
-          Stroke="Gray"
-          StrokeThickness="1"
-          StrokeShape="RoundRectangle 24">
-                    <Image Source="facebook_logo.webg"
-                 Aspect="AspectFit" />
+       x:Name="PasswordBorder"
+       BackgroundColor="#F2F2F2"
+       StrokeThickness="0"
+       HeightRequest="50"
+       Opacity="0"
+       StrokeShape="RoundRectangle 25"
+       IsVisible="{Binding IsEmailEntered}">
+                    <Entry
+         Placeholder="Password"
+         VerticalOptions="Center"
+         Margin="16,0"
+         BackgroundColor="Transparent"
+         Text="{Binding Password, Mode=TwoWay}"
+         IsPassword="True"
+         ClearButtonVisibility="WhileEditing"/>
                 </Border>
 
-            </HorizontalStackLayout>
+                <!-- OR Separator -->
+                <HorizontalStackLayout
+       VerticalOptions="Center"
+       HorizontalOptions="Center">
+                    <BoxView
+         WidthRequest="50"
+         HeightRequest="1"
+         BackgroundColor="#CCCCCC"
+         VerticalOptions="Center" />
+                    <Label
+         Text="   OR Continue with  "
+         FontSize="12"
+         TextColor="#999999" />
+                    <BoxView
+         WidthRequest="50"
+         HeightRequest="1"
+         BackgroundColor="#CCCCCC"
+         VerticalOptions="Center" />
+                </HorizontalStackLayout>
 
-            <!-- Sign Up Link -->
-            <HorizontalStackLayout
-        Spacing="4"
-        HorizontalOptions="Center">
+                <!-- Social Buttons -->
+                <HorizontalStackLayout
+       Spacing="16"
+       HorizontalOptions="Center">
+
+                    <Border
+         WidthRequest="48"
+         HeightRequest="48"
+         Stroke="Gray"
+         StrokeThickness="1"
+         StrokeShape="RoundRectangle 24">
+                        <Image Source="google_logo.webp"
+                Aspect="AspectFit"/>
+                    </Border>
+
+                    <Border
+         WidthRequest="48"
+         HeightRequest="48"
+         Stroke="Gray"
+         StrokeThickness="1"
+         StrokeShape="RoundRectangle 24">
+                        <Image Source="apple_logo.jpg"
+                Aspect="AspectFit"
+                          HeightRequest="134"
+                          WidthRequest="100"
+                          />
+                    </Border>
+
+                    <Border
+         WidthRequest="48"
+         HeightRequest="48"
+         Stroke="Gray"
+         StrokeThickness="1"
+         StrokeShape="RoundRectangle 24">
+                        <Image Source="facebook_logo.webg"
+                Aspect="AspectFit" />
+                    </Border>
+
+                </HorizontalStackLayout>
+
+                <!-- Sign Up Link -->
+                <HorizontalStackLayout
+       Spacing="4"
+       HorizontalOptions="Center">
+                    <Label
+         Text="Create An Account"
+         FontSize="12"
+         TextColor="#999999" />
+                    <Label
+         Text="Sign Up"
+         FontSize="12"
+         TextColor="#0066FF"
+         FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+             Command="{Binding NavigateToSignUpCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+
+                <!-- Next Button -->
+                <Button
+       Text="Login"
+       HeightRequest="50"
+       CornerRadius="25"
+       BackgroundColor="#0066FF"
+       TextColor="White"
+       FontAttributes="Bold"
+       Command="{Binding LoginCommand}"
+       IsEnabled="{Binding CanLogin}" />
+
+                <!-- Cancel Link -->
                 <Label
-          Text="Create An Account"
-          FontSize="12"
-          TextColor="#999999" />
-                <Label
-          Text="Sign Up"
-          FontSize="12"
-          TextColor="#0066FF"
-          FontAttributes="Bold">
+       Text="Cancel"
+       FontSize="14"
+       TextColor="#777777"
+       HorizontalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer
-              Command="{Binding NavigateToSignUpCommand}" />
+           Command="{Binding CancelCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-            </HorizontalStackLayout>
 
-            <!-- Next Button -->
-            <Button
-        Text="Next"
-        HeightRequest="50"
-        CornerRadius="25"
-        BackgroundColor="#0066FF"
-        TextColor="White"
-        FontAttributes="Bold"
-        Command="{Binding NextCommand}" />
-
-            <!-- Cancel Link -->
-            <Label
-        Text="Cancel"
-        FontSize="14"
-        TextColor="#777777"
-        HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer
-            Command="{Binding CancelCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
-
-        </VerticalStackLayout>
-    </ScrollView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

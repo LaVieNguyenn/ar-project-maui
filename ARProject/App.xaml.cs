@@ -11,20 +11,11 @@ namespace ARProject
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            //var shell = new AppShell();
+            var shell = new AppShell();
 
-            ////Check authentication
+            shell.GoToAsync($"//{nameof(LoginPage)}");
 
-            //bool isAuthenticated = Preferences.ContainsKey("auth_token");
-
-            //if (isAuthenticated)
-            //  {
-            //    shell.GoToAsync($"//{nameof(LoginPage)}");
-            //}
-
-            //return new Window(shell);
-            return new Window(new LoginPage());
-
+            return new Window(shell);
         }
     }
 }

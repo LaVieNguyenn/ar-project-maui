@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ARProject.ViewModels
 {
-    internal class BaseViewModel
+    public abstract partial class BaseViewModel : ObservableObject
     {
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
+        bool isBusy;
+        public bool IsNotBusy => !IsBusy;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotLoading))]
+        bool isLoading;
+        public bool IsNotLoading => !IsLoading;
     }
 }
