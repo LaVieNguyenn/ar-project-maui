@@ -1,5 +1,4 @@
-﻿using ARProject.BLL.Services;
-using ARProject.BLL.Services.UserService;
+﻿using ARProject.BLL.Services.UserService;
 using ARProject.DAL.Helper;
 using ARProject.DAL.UnitOfWork.Authentication;
 using ARProject.DAL.UnitOfWork.Storage;
@@ -34,7 +33,7 @@ namespace ARProject
             //mongodb://localhost:27017/
             //mongodb://10.0.2.2:27017/
             builder.Services.AddSingleton<IUserService, UserService>();
-    
+
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<LoginPage>();
 

@@ -1,6 +1,4 @@
 ﻿using ARProject.DAL.Helper;
-using ARProject.DAL.Models;
-using ARProject.DAL.Repositories;
 using ARProject.DAL.Repositories.UserRepositories;
 using MongoDB.Driver;
 
@@ -20,7 +18,6 @@ namespace ARProject.DAL.UnitOfWork.Authentication
         public IUserRepository Users => _userRepo ??= new UserRepository(_db);
 
 
-        public void Dispose() {}
+        public void Dispose() { }
     }
 }
-  

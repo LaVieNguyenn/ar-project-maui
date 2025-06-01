@@ -1,13 +1,8 @@
 ﻿using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ARProject.DAL.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T>  where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly IMongoCollection<T> _collection;
 
