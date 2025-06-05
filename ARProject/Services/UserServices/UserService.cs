@@ -1,6 +1,5 @@
 ﻿using ARProject.Helpers;
 using ARProject.Models;
-using System.Reflection.Metadata;
 
 namespace ARProject.Services.UserServices
 {
@@ -33,8 +32,8 @@ namespace ARProject.Services.UserServices
             throw new NotImplementedException();
         }
 
-        public Task<ApiResponse<string>> LoginAsync(LoginRequest rq) =>_apiService.PostAsync<LoginRequest,ApiResponse<string>>(ConstData.Api.LOGIN, rq);
-        
+        public Task<ApiResponse<string>> LoginAsync(LoginRequest rq) => _apiService.PostAsync<LoginRequest, ApiResponse<string>>(ConstData.Api.LOGIN, rq);
+
 
         public Task<bool> UpdateProductAsync(string id, User dto)
         {

@@ -4,7 +4,6 @@ using ARProject.Services.UserServices;
 using ARProject.ViewModels;
 using ARProject.Views;
 using Microsoft.Extensions.Logging;
-using System.Buffers.Text;
 using System.Net.Http.Headers;
 
 namespace ARProject
