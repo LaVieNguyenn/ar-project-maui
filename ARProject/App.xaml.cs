@@ -1,6 +1,4 @@
-﻿using ARProject.Views;
-
-namespace ARProject
+﻿namespace ARProject
 {
     public partial class App : Application
     {
@@ -13,7 +11,7 @@ namespace ARProject
         {
             var shell = new AppShell();
 
-            shell.GoToAsync($"//{nameof(LoginPage)}");
+            //shell.GoToAsync($"//{nameof(LoginPage)}");
 
             return new Window(shell);
         }

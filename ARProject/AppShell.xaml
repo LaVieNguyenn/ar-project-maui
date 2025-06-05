@@ -5,18 +5,48 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ARProject"
     xmlns:views="clr-namespace:ARProject.Views"
-    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutBehavior="Disabled"
     Title="ARProject">
 
-    <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage"
-        />
+    <TabBar x:Name="MainTabBar">
+        <Tab x:Name="HomeTab" Title="Home" Icon="home.png">
+            <ShellContent
+                x:Name="HomeShell"
+                Title="Home"
+                ContentTemplate="{DataTemplate local:MainPage}"
+                Route="MainPage" />
+        </Tab>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        <Tab x:Name="WishlistTab" Title="Wishlist">
+            <ShellContent
+                x:Name="WishlistShell"
+                Title="Wishlist"
+                ContentTemplate="{DataTemplate views:WishlistPage}"
+                Route="WishlistPage" />
+        </Tab>
 
+        <Tab x:Name="ARTab" Title="AR">
+            <ShellContent
+                x:Name="ARShell"
+                Title="AR"
+                ContentTemplate="{DataTemplate views:ARPage}"
+                Route="ARPage" />
+        </Tab>
+
+        <Tab x:Name="PaymentTab" Title="Payment">
+            <ShellContent
+                x:Name="PaymentShell"
+                Title="Payment"
+                ContentTemplate="{DataTemplate views:PaymentPage}"
+                Route="PaymentPage" />
+        </Tab>
+
+        <Tab x:Name="SettingTab" Title="Setting">
+            <ShellContent
+                x:Name="SettingShell"
+                Title="Setting"
+                ContentTemplate="{DataTemplate views:SettingPage}"
+                Route="SettingPage" />
+        </Tab>
+    </TabBar>
 </Shell>
