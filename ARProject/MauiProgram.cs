@@ -1,10 +1,11 @@
-﻿using ARProject.BLL.Services.UserService;
-using ARProject.DAL.Helper;
-using ARProject.DAL.UnitOfWork.Authentication;
-using ARProject.DAL.UnitOfWork.Storage;
+﻿using ARProject.Helpers;
+using ARProject.Services;
+using ARProject.Services.UserServices;
 using ARProject.ViewModels;
 using ARProject.Views;
 using Microsoft.Extensions.Logging;
+using System.Buffers.Text;
+using System.Net.Http.Headers;
 
 namespace ARProject
 {
@@ -13,6 +14,14 @@ namespace ARProject
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
+            builder.Services.AddHttpClient<IApiService, ApiService>(client =>
+            {
+                client.BaseAddress = new Uri(ConstData.Api.BASEURL);
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+            });
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -25,14 +34,7 @@ namespace ARProject
             builder.Logging.AddDebug();
 #endif
 
-            //Services
-            builder.Services.AddSingleton<IAuthUnitOfWork>(_ =>
-                new AuthUnitOfWork(DbNameHelper.DbConnectionString.AUTH));
-            builder.Services.AddSingleton<IStorageUnitOfWork>(_ =>
-                new StorageUnitOfWork("mongodb://localhost:27017/"));
-            //mongodb://localhost:27017/
-            //mongodb://10.0.2.2:27017/
-            builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<LoginPage>();

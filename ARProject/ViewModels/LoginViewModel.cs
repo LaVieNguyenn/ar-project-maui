@@ -1,5 +1,5 @@
-﻿using ARProject.BLL.Services.UserService;
-using ARProject.DAL.Models;
+﻿using ARProject.Models;
+using ARProject.Services.UserServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -27,8 +27,8 @@ namespace ARProject.ViewModels
         {
             IsLoading = true;
 
-            User? user = await _userService.AuthenticateAsync(Email, Password);
-            if (user != null)
+            var response = await _userService.LoginAsync(new LoginRequest { Email = this.Email, Password = this.Password });
+            if (response.Success)
             {
                 await Shell.Current.GoToAsync("//MainPage");
             }
