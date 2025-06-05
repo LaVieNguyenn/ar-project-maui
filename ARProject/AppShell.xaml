@@ -13,8 +13,8 @@
             <ShellContent
                 x:Name="HomeShell"
                 Title="Home"
-                ContentTemplate="{DataTemplate local:MainPage}"
-                Route="MainPage" />
+                ContentTemplate="{DataTemplate views:HomePage}"
+                Route="HomePage" />
         </Tab>
 
         <Tab x:Name="WishlistTab" Title="Wishlist">

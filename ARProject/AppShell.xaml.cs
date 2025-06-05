@@ -15,7 +15,7 @@ namespace ARProject
             PaymentTab.Icon = CreateIcon(FluentUI.wallet_credit_card_24_regular);
             SettingTab.Icon = CreateIcon(FluentUI.settings_24_regular);
 
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(WishlistPage), typeof(WishlistPage));
             Routing.RegisterRoute(nameof(ARPage), typeof(ARPage));

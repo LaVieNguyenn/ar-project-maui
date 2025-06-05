@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:viewmodels="clr-namespace:ARProject.ViewModels"
+	xmlns:models="clr-namespace:ARProject.ViewModels"
+	xmlns:converters="clr-namespace:ARProject.Converters"
+    x:Class="ARProject.Views.HomePage"
+    Title="{Binding Title}"
+    BackgroundColor="#F5F5F5">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" Padding="16,24,16,16">
+                <!-- Search Bar -->
+                <Frame BackgroundColor="White" 
+                       CornerRadius="16" 
+                       Padding="12"
+                       HeightRequest="60"
+                       HasShadow="True"
+                       BorderColor="#E8ECEF">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <!-- Search icon -->
+                        <Label Grid.Column="0"
+                               FontFamily="FluentUI"
+                               Text="&#xf690;"
+                               FontSize="24"
+                               TextColor="#9CA3AF"
+                               VerticalOptions="Center"
+                               Margin="4,0" />
+                        <!-- Entry -->
+                        <Entry Grid.Column="1" 
+                               Placeholder="Tìm kiếm sản phẩm..." 
+                               PlaceholderColor="#9CA3AF"
+                               TextColor="#111827"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               ClearButtonVisibility="WhileEditing"
+                               Margin="12,-12"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="Center" />
+                        <!-- Voice icon -->
+                        <Label Grid.Column="2"
+                               FontFamily="FluentUI"
+                               Text="&#xf5df;"
+                               FontSize="24"
+                               TextColor="#9CA3AF"
+                               VerticalOptions="Center"
+                               Margin="4,0">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                </Frame>
+                <!-- Categories Slider -->
+                <Grid RowDefinitions="Auto,Auto" Margin="0,16,0,16">
+                    <Label Text="Sản phẩm hàng đầu" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#111827"
+                           Margin="0,0,0,12" />
+                    <ScrollView Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout Spacing="12">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                                <Frame HeightRequest="72" 
+                                       WidthRequest="72" 
+                                       CornerRadius="36" 
+                                       Padding="8"
+                                       HasShadow="True"
+                                       BackgroundColor="White">
+                                    <Image Source="dresses_icon.png" 
+                                           Aspect="AspectFit" />
+                                </Frame>
+                                <Label Text="Váy" 
+                                       FontSize="14" 
+                                       TextColor="#111827"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                                <Frame HeightRequest="72" 
+                                       WidthRequest="72" 
+                                       CornerRadius="36" 
+                                       Padding="8"
+                                       HasShadow="True"
+                                       BackgroundColor="White">
+                                    <Image Source="tshirts_icon.png" 
+                                           Aspect="AspectFit" />
+                                </Frame>
+                                <Label Text="Áo thun" 
+                                       FontSize="14" 
+                                       TextColor="#111827"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                                <Frame HeightRequest="72" 
+                                       WidthRequest="72" 
+                                       CornerRadius="36" 
+                                       Padding="8"
+                                       HasShadow="True"
+                                       BackgroundColor="White">
+                                    <Image Source="skirts_icon.png" 
+                                           Aspect="AspectFit" />
+                                </Frame>
+                                <Label Text="Chân váy" 
+                                       FontSize="14" 
+                                       TextColor="#111827"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                                <Frame HeightRequest="72" 
+                                       WidthRequest="72" 
+                                       CornerRadius="36" 
+                                       Padding="8"
+                                       HasShadow="True"
+                                       BackgroundColor="White">
+                                    <Image Source="shoes_icon.png" 
+                                           Aspect="AspectFit" />
+                                </Frame>
+                                <Label Text="Giày" 
+                                       FontSize="14" 
+                                       TextColor="#111827"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                                <Frame HeightRequest="72" 
+                                       WidthRequest="72" 
+                                       CornerRadius="36" 
+                                       Padding="8"
+                                       HasShadow="True"
+                                       BackgroundColor="White">
+                                    <Image Source="bags_icon.png" 
+                                           Aspect="AspectFit" />
+                                </Frame>
+                                <Label Text="Túi xách" 
+                                       FontSize="14" 
+                                       TextColor="#111827"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                </Grid>
+                <!-- Banner -->
+                <Frame Padding="0" 
+                       CornerRadius="16" 
+                       HasShadow="True"
+                       HeightRequest="220"
+                       Margin="0,16,0,16"
+                       IsClippedToBounds="True">
+                    <Grid>
+                        <Image Source="banner_image.jpg" 
+                               Aspect="AspectFill" />
+                        <Frame BackgroundColor="#000000" 
+                               Opacity="0.5" 
+                               CornerRadius="16" />
+                        <VerticalStackLayout Margin="20,48,20,20">
+                            <Label Text="GIẢM 50-40%" 
+                                   TextColor="#FFFFFF" 
+                                   FontSize="26" 
+                                   FontAttributes="Bold" />
+                            <Label Text="Tất cả sản phẩm" 
+                                   TextColor="#FFFFFF" 
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   Margin="0,8,0,12" />
+                            <Button Text="MUA NGAY" 
+                                    BackgroundColor="#3B82F6" 
+                                    TextColor="#FFFFFF"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    HeightRequest="44"
+                                    CornerRadius="8"
+                                    HorizontalOptions="Start"
+                                    Padding="16,0" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+                <!-- Sort and Filter -->
+                <Grid RowDefinitions="Auto,Auto,Auto" Margin="0,12,0,12">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <Label Text="Nổi bật" 
+                               VerticalOptions="Center"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#111827" />
+                        <Button Grid.Column="1"
+                                Text="Sắp xếp" 
+                                BackgroundColor="White"
+                                TextColor="#374151"
+                                FontSize="14"
+                                HeightRequest="40"
+                                CornerRadius="8"
+                                BorderWidth="1"
+                                BorderColor="#E5E7EB"
+                                Margin="0,0,8,0"
+                                Padding="12,0" />
+                        <Button Grid.Column="2"
+                                Text="Lọc" 
+                                BackgroundColor="White"
+                                TextColor="#374151"
+                                FontSize="14"
+                                HeightRequest="40"
+                                CornerRadius="8"
+                                BorderWidth="1"
+                                BorderColor="#E5E7EB"
+                                Padding="12,0" />
+                    </Grid>
+                    <CollectionView Grid.Row="1"
+                                    ItemsSource="{Binding FeaturedProducts}"
+                                    ItemsLayout="VerticalGrid, 2"
+                                    ItemSizingStrategy="MeasureFirstItem"
+                                    Margin="0,16,0,0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:ProductItem">
+                                <Frame BackgroundColor="White"
+                                       CornerRadius="12"
+                                       HasShadow="True"
+                                       Padding="8"
+                                       HeightRequest="240"
+                                       Margin="0,0,12,16">
+                                    <Grid RowDefinitions="160,Auto,Auto">
+                                        <Image Source="{Binding ImageUrl}"
+                                               HeightRequest="160"
+                                               Aspect="AspectFill" />
+                                        <Label Grid.Row="1"
+                                               Text="{Binding Price, StringFormat='${0:F2}'}"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               TextColor="#111827"
+                                               Margin="8,8,8,0" />
+                                        <Label Grid.Row="2"
+                                               Text="{Binding Name}"
+                                               FontSize="14"
+                                               TextColor="#374151"
+                                               LineBreakMode="TailTruncation"
+                                               Margin="8,4,8,8"
+                                               MaxLines="2" />
+                                    </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HomePageViewModel}}, Path=ItemTappedCommand}" 
+                                                              CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Button Grid.Row="2"
+                            Text="Tải thêm" 
+                            BackgroundColor="#3B82F6"
+                            TextColor="White"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            HeightRequest="48"
+                            CornerRadius="8"
+                            HorizontalOptions="Center"
+                            Margin="0,16,0,0"
+                            Command="{Binding LoadMoreFeaturedProductsCommand}" />
+                </Grid>
+                <!-- Flash Sale -->
+                <Grid RowDefinitions="Auto,Auto" Margin="0,16,0,16">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Flash Sale" 
+                               FontSize="24" 
+                               FontAttributes="Bold" 
+                               TextColor="#111827"
+                               VerticalOptions="Center" />
+                        <HorizontalStackLayout Grid.Column="1" Spacing="8">
+                            <Label 
+                                   FontFamily="FluentUI"
+                                   Text="&#xe36e;"
+                                   FontSize="32"
+                                   TextColor="#9CA3AF"
+                                   VerticalOptions="Center"
+                                   />
+                            <Frame BackgroundColor="#F3F4F6" 
+                                   Padding="8,4" 
+                                   CornerRadius="8"
+                                   HasShadow="False">
+                                <Label Text="00" 
+                                       TextColor="#111827" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" />
+                            </Frame>
+                            <Label Text=":" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center" />
+                            <Frame BackgroundColor="#F3F4F6" 
+                                   Padding="8,4" 
+                                   CornerRadius="8"
+                                   HasShadow="False">
+                                <Label Text="36" 
+                                       TextColor="#111827" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" />
+                            </Frame>
+                            <Label Text=":" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center" />
+                            <Frame BackgroundColor="#F3F4F6" 
+                                   Padding="8,4" 
+                                   CornerRadius="8"
+                                   HasShadow="False">
+                                <Label Text="58" 
+                                       TextColor="#111827" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <ScrollView Grid.Row="1" 
+                                Orientation="Horizontal"
+                                HorizontalScrollBarVisibility="Never"
+                                Margin="0,16,0,0">
+                        <CollectionView ItemsSource="{Binding FlashSaleProducts}"
+                                        HeightRequest="240">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="12" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ProductItem">
+                                    <Frame BackgroundColor="White"
+                                           CornerRadius="12"
+                                           HasShadow="True"
+                                           HeightRequest="220"
+                                           WidthRequest="160"
+                                           Padding="8">
+                                        <Grid RowDefinitions="120,Auto,Auto">
+                                            <Image Source="{Binding ImageUrl}"
+                                                   Aspect="AspectFill"
+                                                   HeightRequest="120" />
+                                            <Frame Grid.Row="0"
+                                                   BackgroundColor="#EF4444"
+                                                   CornerRadius="6"
+                                                   Padding="6,4"
+                                                   HeightRequest="24"
+                                                   WidthRequest="48"
+                                                   HasShadow="False"
+                                                   HorizontalOptions="End"
+                                                   VerticalOptions="Start"
+                                                   Margin="8"
+                                                   IsVisible="{Binding Discount, Converter={StaticResource IntToBoolConverter}}">
+                                                <Label Text="{Binding Discount, StringFormat='-{0}%'}"
+                                                       TextColor="White"
+                                                       FontSize="12"
+                                                       FontAttributes="Bold"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Frame>
+                                            <Label Grid.Row="1"
+                                                   Text="{Binding Name}"
+                                                   TextColor="#111827"
+                                                   FontSize="14"
+                                                   LineBreakMode="TailTruncation"
+                                                   Margin="8,8,8,4"
+                                                   MaxLines="2"
+                                                   HeightRequest="40"/>
+                                            <HorizontalStackLayout Grid.Row="2"
+                                                                  Spacing="12"
+                                                                  Margin="8,4,8,8">
+                                                <Label Text="{Binding Price, StringFormat='${0:F2}'}"
+                                                       TextColor="#111827"
+                                                       FontSize="16"
+                                                       FontAttributes="Bold" />
+                                                <Image Source="heart_icon.png"
+                                                       HeightRequest="20"
+                                                       WidthRequest="20"
+                                                       VerticalOptions="Center"
+                                                       HorizontalOptions="EndAndExpand">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HomePageViewModel}}, Path=AddToWishlistCommand}" 
+                                                                              CommandParameter="{Binding .}" />
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HomePageViewModel}}, Path=ItemTappedCommand}" 
+                                                                  CommandParameter="{Binding .}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
+                </Grid>
+                <!-- Most Popular -->
+                <Grid RowDefinitions="Auto,Auto" Margin="0,16,0,16">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Phổ biến nhất" 
+                               FontSize="24" 
+                               FontAttributes="Bold" 
+                               TextColor="#111827"
+                               VerticalOptions="Center" />
+                        <Button Grid.Column="1"
+                                Text="Xem tất cả" 
+                                BackgroundColor="Transparent"
+                                TextColor="#3B82F6"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                HeightRequest="40"
+                                VerticalOptions="Center" />
+                    </Grid>
+                    <ScrollView Grid.Row="1" 
+                                Orientation="Horizontal"
+                                HorizontalScrollBarVisibility="Never"
+                                Margin="0,16,0,0">
+                        <CollectionView ItemsSource="{Binding PopularProducts}"
+                                        HeightRequest="240">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="12" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ProductItem">
+                                    <Frame BackgroundColor="White"
+                                           CornerRadius="12"
+                                           HasShadow="True"
+                                           HeightRequest="220"
+                                           WidthRequest="160"
+                                           Padding="8">
+                                        <Grid RowDefinitions="120,Auto,Auto">
+                                            <Image Source="{Binding ImageUrl}"
+                                                   Aspect="AspectFill"
+                                                   HeightRequest="120" />
+                                            <Label Grid.Row="1"
+                                                   Text="{Binding Name}"
+                                                   TextColor="#111827"
+                                                   FontSize="14"
+                                                   LineBreakMode="TailTruncation"
+                                                   Margin="8,8,8,4"
+                                                   MaxLines="2"
+                                                   HeightRequest="40"/>
+                                            <HorizontalStackLayout Grid.Row="2"
+                                                                  Spacing="12"
+                                                                  Margin="8,4,8,8">
+                                                <Label Text="{Binding Price, StringFormat='${0:F2}'}"
+                                                       TextColor="#111827"
+                                                       FontSize="16"
+                                                       FontAttributes="Bold" />
+                                                <Image 
+                                                       Source="heart_icon.png"
+                                                       HeightRequest="20"
+                                                       WidthRequest="20"
+                                                       VerticalOptions="Center"
+                                                       HorizontalOptions="EndAndExpand">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HomePageViewModel}}, Path=AddToWishlistCommand}" 
+                                                                              CommandParameter="{Binding .}" />
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HomePageViewModel}}, Path=ItemTappedCommand}" 
+                                                                  CommandParameter="{Binding .}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
+                </Grid>
+                <!-- Just For You -->
+                <Grid RowDefinitions="Auto,Auto" Margin="0,16,0,16">
+                    <Label Text="Dành riêng cho bạn" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#111827"
+                           Margin="0,0,0,12" />
+                    <CollectionView Grid.Row="1"
+                                    ItemsSource="{Binding JustForYouProducts}"
+                                    ItemsLayout="VerticalGrid, 2"
+                                    ItemSizingStrategy="MeasureFirstItem">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:ProductItem">
+                                <Frame BackgroundColor="White"
+                                       CornerRadius="12"
+                                       HasShadow="True"
+                                       Padding="8"
+                                       HeightRequest="240"
+                                       Margin="0,0,12,16">
+                                    <Grid RowDefinitions="160,Auto,Auto">
+                                        <Image Source="{Binding ImageUrl}"
+                                               HeightRequest="160"
+                                               Aspect="AspectFill" />
+                                        <Label Grid.Row="1"
+                                               Text="{Binding Price, StringFormat='${0:F2}'}"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               TextColor="#111827"
+                                               Margin="8,8,8,0" />
+                                        <Label Grid.Row="2"
+                                               Text="{Binding Name}"
+                                               FontSize="14"
+                                               TextColor="#374151"
+                                               LineBreakMode="TailTruncation"
+                                               Margin="8,4,8,8"
+                                               MaxLines="2" />
+                                    </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HomePageViewModel}}, Path=ItemTappedCommand}" 
+                                                              CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <converters:BoolToNewConverter x:Key="BoolToNewConverter" />
+            <converters:BoolToSaleConverter x:Key="BoolToSaleConverter" />
+            <converters:BoolToHotConverter x:Key="BoolToHotConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+</ContentPage>
