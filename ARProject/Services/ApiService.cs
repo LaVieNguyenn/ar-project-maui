@@ -37,8 +37,9 @@ namespace ARProject.Services
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest data)
         {
             var jsonReq = JsonSerializer.Serialize(data);
-            var content = new StringContent(jsonReq, Encoding.UTF8, "application/json");
+            var content = new StringContent(jsonReq, Encoding.UTF8, "application/json");    
             var response = await _httpClient.PostAsync(endpoint, content);
+            var responseBody = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
                 throw new Exception($"POST {endpoint} failed: {response.StatusCode}");
             var json = await response.Content.ReadAsStringAsync();

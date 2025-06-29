@@ -1,6 +1,4 @@
-using System;
 using ARProject.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace ARProject.Views
 {

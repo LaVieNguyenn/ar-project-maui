@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vw="clr-namespace:ARProject.ViewModels"
+             x:Class="ARProject.Views.RegisterStep.RegisterStep2"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="White"
+             Padding="20">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="24" VerticalOptions="Center">
+
+            <!-- Logo -->
+            <Border WidthRequest="350" HeightRequest="200" StrokeThickness="0" BackgroundColor="Transparent" HorizontalOptions="Center">
+                <Image Source="logo_myfit.png" Aspect="AspectFill" />
+            </Border>
+
+            <!-- Title -->
+            <Label Text="Body Info"
+                   FontSize="38"
+                   FontAttributes="Bold"
+                   TextColor="#111111"
+                   HorizontalOptions="Start" />
+
+            <!-- Height -->
+            <Label Text="Height" FontSize="20" FontAttributes="Bold" />
+            <Border BackgroundColor="#F2F2F2" HeightRequest="50" StrokeShape="RoundRectangle 25">
+                <Entry Placeholder="Height (cm)"
+                       Keyboard="Numeric"
+                       Text="{Binding Height}"
+                       Margin="16,0" />
+            </Border>
+            <Label Text="{Binding [Height], Mode=OneWay}" TextColor="Red" FontSize="12" />
+
+            <!-- Weight + Tooltip -->
+            <Label Text="Weight" FontSize="20" FontAttributes="Bold" />
+            <HorizontalStackLayout>
+                <Border BackgroundColor="#F2F2F2" HeightRequest="50" StrokeShape="RoundRectangle 30" HorizontalOptions="FillAndExpand">
+                    <Entry Placeholder="Weight (kg)"
+                           Keyboard="Numeric"
+                           Text="{Binding Weight}"
+                           Margin="16,0" />
+                </Border>
+
+                <Image Source="question_icon.svg"
+                       WidthRequest="24"
+                       HeightRequest="24"
+                       VerticalOptions="Center"
+                       Margin="8,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowWeightInfoCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </HorizontalStackLayout>
+            <Label Text="{Binding [Weight], Mode=OneWay}" TextColor="Red" FontSize="12" />
+
+            <Button Text="Submit"
+                    Command="{Binding SignUpCommand}"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    BackgroundColor="#0066FF"
+                    TextColor="White"
+                    FontAttributes="Bold" />
+
+            <Label Text="Back"
+                   FontSize="14"
+                   TextColor="#777777"
+                   HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

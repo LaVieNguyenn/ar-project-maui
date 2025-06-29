@@ -6,10 +6,16 @@ namespace ARProject.Services.UserServices
     public interface IUserService
     {
         Task<ApiResponse<string>> LoginAsync(LoginRequest rq);
-        Task<List<User>> GetAllProductsAsync();
-        Task<User> GetProductByIdAsync(string id);
-        Task<User> CreateProductAsync(User dto);
-        Task<bool> UpdateProductAsync(string id, User dto);
-        Task<bool> DeleteProductAsync(string id);
+        Task<ApiResponse<string>> RegisterAsync(RegisterRequest rq);
+        string GetToken();
+        Task SaveTokenAsync(string token);
+        Task RemoveTokenAsync();
+
+        //Task<UserInfo> GetProfileAsync();
+        //Task SaveProfileAsync(UserInfo user); 
+        //Task<UserInfo> LoadLocalProfileAsync();
+
+        bool IsLoggedIn();
+        Task LogoutAsync();
     }
 }

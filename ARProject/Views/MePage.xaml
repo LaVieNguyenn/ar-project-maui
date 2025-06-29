@@ -1,0 +1,62 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ARProject.ViewModels"
+             x:Class="ARProject.Views.MePage"
+             x:DataType="vm:MeViewModel"
+             Title="Account"
+             Shell.NavBarIsVisible="True"
+             BackgroundColor="White"
+             Padding="0">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="0" Spacing="24" BackgroundColor="White">
+            <!-- Header section -->
+            <Grid BackgroundColor="#0066FF" Padding="24,48,24,24" RowDefinitions="Auto,Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Source="{Binding AvatarUrl, FallbackValue='user_placeholder.png'}"
+                       WidthRequest="64" HeightRequest="64"
+                       Aspect="AspectFill"
+                       Margin="0,0,16,0"
+                       Grid.Row="0" Grid.Column="0"
+                       Style="{StaticResource CircleImageStyle}" />
+
+                <VerticalStackLayout Grid.Row="0" Grid.Column="1" VerticalOptions="Center">
+                    <Label Text="{Binding DisplayName, FallbackValue='Guest'}"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <Label Text="{Binding Email}" FontSize="14" TextColor="White"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Quick menu section -->
+            <Frame CornerRadius="16" Margin="16,-32,16,0" Padding="16" HasShadow="True"
+                   BackgroundColor="White">
+                <VerticalStackLayout Spacing="16">
+                    <Button Text="Edit"
+                            BackgroundColor="#0066FF"
+                            TextColor="White"
+                            CornerRadius="8"
+                            FontAttributes="Bold"
+                            Command="{Binding EditProfileCommand}" />
+
+                    <Button Text="History"
+                            BackgroundColor="#F2F8FF"
+                            TextColor="#0066FF"
+                            CornerRadius="8"
+                            Command="{Binding ViewOrdersCommand}" />
+
+                    <Button Text="{Binding LoginLogoutButtonText}"
+                            Command="{Binding LoginLogoutCommand}"
+                            BackgroundColor="#F2F8FF"
+                            TextColor="#0066FF"
+                            CornerRadius="8"/>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

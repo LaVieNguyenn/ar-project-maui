@@ -2,7 +2,7 @@
 
 namespace ARProject.ViewModels
 {
-    public abstract partial class BaseViewModel : ObservableObject
+    public abstract partial class BaseViewModel : ObservableValidator
     {
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsNotBusy))]

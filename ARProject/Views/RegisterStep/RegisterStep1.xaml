@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vw="clr-namespace:ARProject.ViewModels"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             x:Class="ARProject.Views.RegisterStep.RegisterStep1"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="White"
+             Padding="20">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="24" VerticalOptions="Center">
+
+            <!-- Logo -->
+            <Border WidthRequest="350" HeightRequest="200" StrokeThickness="0" BackgroundColor="Transparent" HorizontalOptions="Center">
+                <Image Source="logo_myfit.png" Aspect="AspectFill" />
+            </Border>
+
+            <!-- Title -->
+            <Label Text="Personal Info"
+                   FontSize="38"
+                   FontAttributes="Bold"
+                   TextColor="#111111"
+                   HorizontalOptions="Start" />
+
+            <!--Full Name-->
+            <Label Text="How should we call you?" FontSize="20" FontAttributes="Bold" />
+                <Entry Placeholder="Full Name"
+           Keyboard="Default"
+           Text="{Binding UserName}"
+           Margin="8,0"
+           VerticalOptions="Center"
+           FontSize="18"
+           HeightRequest="40"
+           />
+            <Label Text="{Binding [UserName], Mode=OneWay}" TextColor="Red" FontSize="12" />
+
+            <Label Text="Select Gender" FontSize="20" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding GenderOptions}" SelectedIndex="{Binding Gender, Mode=TwoWay}"/>
+            <Label Text="{Binding [Gender], Mode=OneWay}" TextColor="Red" FontSize="12" />
+
+            <Label Text="Date of Birth" FontSize="20" FontAttributes="Bold" />
+            <DatePicker Date="{Binding Birthday}" MaximumDate="{x:Static sys:DateTime.Now}" />
+            <Label Text="{Binding [Birthday], Mode=OneWay}" TextColor="Red" FontSize="12" />
+
+            <Button Text="Next"
+                    Command="{Binding NextCommand}"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    BackgroundColor="#0066FF"
+                    TextColor="White"
+                    FontAttributes="Bold" />
+
+            <Label Text="Back"
+                   FontSize="14"
+                   TextColor="#777777"
+                   HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

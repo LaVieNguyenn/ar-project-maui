@@ -1,4 +1,5 @@
 ﻿using ARProject.Views;
+using ARProject.Views.RegisterStep;
 using Fonts;
 
 namespace ARProject
@@ -14,6 +15,7 @@ namespace ARProject
             ARTab.Icon = CreateIcon(FluentUI.camera_24_regular);
             PaymentTab.Icon = CreateIcon(FluentUI.wallet_credit_card_24_regular);
             SettingTab.Icon = CreateIcon(FluentUI.settings_24_regular);
+            MeTab.Icon = CreateIcon(FluentUI.person_accounts_24_regular);
 
             Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
@@ -21,6 +23,9 @@ namespace ARProject
             Routing.RegisterRoute(nameof(ARPage), typeof(ARPage));
             Routing.RegisterRoute(nameof(PaymentPage), typeof(PaymentPage));
             Routing.RegisterRoute(nameof(SettingPage), typeof(SettingPage));
+            Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
+            Routing.RegisterRoute(nameof(RegisterStep1), typeof(RegisterStep1));
+            Routing.RegisterRoute(nameof(RegisterStep2), typeof(RegisterStep2));
         }
 
         private FontImageSource CreateIcon(string glyph)

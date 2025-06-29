@@ -9,6 +9,13 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="CircleImageStyle" TargetType="Image">
+                <Setter Property="Clip">
+                    <Setter.Value>
+                        <EllipseGeometry Center="32,32" RadiusX="32" RadiusY="32"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,5 +1,6 @@
 ﻿using ARProject.Models;
 using ARProject.Services.UserServices;
+using ARProject.Views.RegisterStep;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -22,23 +23,38 @@ namespace ARProject.ViewModels
             _userService = userService;
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanLogin))]
         async Task LoginAsync()
         {
             IsLoading = true;
 
             var response = await _userService.LoginAsync(new LoginRequest { Email = this.Email, Password = this.Password });
-            if (response.Success)
+            if (response.Success && !string.IsNullOrEmpty(response.Data))
             {
-                await Shell.Current.GoToAsync("//MainPage");
+                await _userService.SaveTokenAsync(response.Data);
+
+               // await _userService.GetProfileAsync();
+
+                await Shell.Current.GoToAsync("//MePage", true);
             }
             else
             {
-                await Shell.Current.DisplayAlert(
-    "Login Failed", "Email or password is incorrect.", "OK");
+                await Shell.Current.DisplayAlert("Login Failed", "Email or password is incorrect.", "OK");
             }
-
             IsLoading = false;
+        }
+
+        [RelayCommand]
+        async Task NavigateToSignUp()
+        {
+            await Shell.Current.GoToAsync($"/{nameof(RegisterPage)}");
+        }
+
+
+        [RelayCommand]
+        async Task CancelAsync()
+        {
+            await Shell.Current.GoToAsync("..", true);
         }
 
         bool CanLogin() => IsNotBusy && IsNotLoading
