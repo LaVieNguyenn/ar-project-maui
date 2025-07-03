@@ -29,32 +29,44 @@ namespace ARProject.Services.UserServices
             var token = SecureStorage.GetAsync(TokenKey).GetAwaiter().GetResult();
             return !string.IsNullOrEmpty(token);
         }
-        //public async Task<UserInfo> GetProfileAsync()
-        //{
-        //    var token = await SecureStorage.GetAsync(TokenKey);
-        //    if (string.IsNullOrEmpty(token)) return null;
 
-        //    // Đặt token vào header gọi API
-        //    _apiService.SetBearerToken(token);
+        public async Task<UserProfile> GetProfileAsync()
+        {
+            var token = await SecureStorage.GetAsync(TokenKey);
+            if (string.IsNullOrEmpty(token))
+                return null;
 
-        //    var user = await _apiService.GetAsync<UserInfo>("/api/v1/users/me");
-        //    if (user != null)
-        //        await SaveProfileAsync(user);
+            _apiService.SetBearerToken(token);
 
-        //    return user;
-        //}
-        //public async Task SaveProfileAsync(UserInfo user)
-        //{
-        //    var json = JsonSerializer.Serialize(user);
-        //    await SecureStorage.SetAsync(ProfileKey, json);
-        //}
+            var userId = JwtHelper.ExtractUserId(token); 
+            if (string.IsNullOrEmpty(userId))
+                return null;
 
-        //public async Task<UserInfo> LoadLocalProfileAsync()
-        //{
-        //    var json = await SecureStorage.GetAsync(ProfileKey);
-        //    if (string.IsNullOrEmpty(json)) return null;
-        //    return JsonSerializer.Deserialize<UserInfo>(json);
-        //}
+            var response = await _apiService.GetAsync<ApiResponse<UserProfile>>(
+                ConstData.Api.GET_USER_BY_ID + userId
+            );
+
+            if (response?.Success == true && response.Data != null)
+            {
+                await SaveProfileAsync(response.Data);
+                return response.Data;
+            }
+
+            return null;
+        }
+
+        public async Task SaveProfileAsync(UserProfile user)
+        {
+            var json = JsonSerializer.Serialize(user);
+            await SecureStorage.SetAsync(ProfileKey, json);
+        }
+
+        public async Task<UserProfile> LoadLocalProfileAsync()
+        {
+            var json = await SecureStorage.GetAsync(ProfileKey);
+            if (string.IsNullOrEmpty(json)) return null;
+            return JsonSerializer.Deserialize<UserProfile>(json);
+        }
 
         public async Task LogoutAsync()
         {

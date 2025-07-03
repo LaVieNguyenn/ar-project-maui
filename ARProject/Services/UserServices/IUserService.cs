@@ -11,9 +11,9 @@ namespace ARProject.Services.UserServices
         Task SaveTokenAsync(string token);
         Task RemoveTokenAsync();
 
-        //Task<UserInfo> GetProfileAsync();
-        //Task SaveProfileAsync(UserInfo user); 
-        //Task<UserInfo> LoadLocalProfileAsync();
+        Task<UserProfile> GetProfileAsync();
+        Task SaveProfileAsync(UserProfile user); 
+        Task<UserProfile> LoadLocalProfileAsync();
 
         bool IsLoggedIn();
         Task LogoutAsync();

@@ -4,9 +4,10 @@
     {
         public class Api
         {
-            public const string BASEURL = "http://10.0.2.2:5093";
+            public const string BASEURL = "http://localhost:5093";
             //http://localhost:5093
             //mongodb://10.0.2.2:5093/
+            //http://10.0.2.2:5093
 
             /// <summary>
             /// Login API URL
@@ -22,6 +23,12 @@
             /// Base API Product URL
             /// </summary>
             public const string BASEPRODUCT = "/api/v1/product";
+
+
+            /// <summary>
+            /// Profile URL
+            /// </summary>
+            public const string GET_USER_BY_ID = "/api/v1/Users/";  
         }
 
     }

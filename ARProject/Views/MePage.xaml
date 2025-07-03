@@ -10,6 +10,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="0" Spacing="24" BackgroundColor="White">
+
             <!-- Header section -->
             <Grid BackgroundColor="#0066FF" Padding="24,48,24,24" RowDefinitions="Auto,Auto">
                 <Grid.ColumnDefinitions>
@@ -25,7 +26,7 @@
                        Style="{StaticResource CircleImageStyle}" />
 
                 <VerticalStackLayout Grid.Row="0" Grid.Column="1" VerticalOptions="Center">
-                    <Label Text="{Binding DisplayName, FallbackValue='Guest'}"
+                    <Label Text="{Binding UserName, FallbackValue='Guest'}"
                            FontSize="20"
                            FontAttributes="Bold"
                            TextColor="White"/>
@@ -33,8 +34,23 @@
                 </VerticalStackLayout>
             </Grid>
 
+            <!-- Profile details -->
+            <Frame CornerRadius="16" Margin="16,-16,16,0" Padding="16" HasShadow="True"
+                   BackgroundColor="#F2F8FF">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Gender:" FontAttributes="Bold"/>
+                    <Label Text="{Binding Gender}" />
+
+                    <Label Text="Height (cm):" FontAttributes="Bold"/>
+                    <Label Text="{Binding Height}" />
+
+                    <Label Text="Weight (kg):" FontAttributes="Bold"/>
+                    <Label Text="{Binding Weight}" />
+                </VerticalStackLayout>
+            </Frame>
+
             <!-- Quick menu section -->
-            <Frame CornerRadius="16" Margin="16,-32,16,0" Padding="16" HasShadow="True"
+            <Frame CornerRadius="16" Margin="16,0,16,0" Padding="16" HasShadow="True"
                    BackgroundColor="White">
                 <VerticalStackLayout Spacing="16">
                     <Button Text="Edit"
@@ -57,6 +73,7 @@
                             CornerRadius="8"/>
                 </VerticalStackLayout>
             </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
