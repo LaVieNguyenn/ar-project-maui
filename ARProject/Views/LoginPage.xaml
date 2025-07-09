@@ -171,7 +171,8 @@
        TextColor="White"
        FontAttributes="Bold"
        Command="{Binding LoginCommand}"
-       IsEnabled="{Binding CanLogin}" />
+       IsEnabled="{Binding CanLogin}"
+                    />
 
                 <!-- Cancel Link -->
                 <Label

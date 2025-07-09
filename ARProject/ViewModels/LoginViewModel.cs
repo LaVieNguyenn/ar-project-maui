@@ -10,11 +10,14 @@ namespace ARProject.ViewModels
     {
         private readonly IUserService _userService;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(CanLogin))]
         [NotifyPropertyChangedFor(nameof(IsEmailEntered))]
-        string email = string.Empty;
+        private string email = string.Empty;
 
         [ObservableProperty]
-        string password = string.Empty;
+        [NotifyPropertyChangedFor(nameof(CanLogin))]
+        private string password = string.Empty;
+
 
         public bool IsEmailEntered => !string.IsNullOrWhiteSpace(Email);
 
@@ -57,7 +60,7 @@ namespace ARProject.ViewModels
             await Shell.Current.GoToAsync("..", true);
         }
 
-        bool CanLogin() => IsNotBusy && IsNotLoading
+        public bool CanLogin => IsNotBusy && IsNotLoading
               && !string.IsNullOrWhiteSpace(Email)
               && !string.IsNullOrWhiteSpace(Password);
     }

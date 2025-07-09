@@ -12,7 +12,7 @@
             /// <summary>
             /// Login API URL
             /// </summary>
-            public const string LOGIN = "/api/v1/auth/login";
+            public const string LOGIN = "/api/v1/Auth/login";
 
             /// <summary>
             /// Register API URL
@@ -20,7 +20,7 @@
             public const string REGISTER = "/api/v1/auth/register";
 
             /// <summary>
-            /// Base API Product URL
+            /// Base API Product URL    
             /// </summary>
             public const string BASEPRODUCT = "/api/v1/product";
 
