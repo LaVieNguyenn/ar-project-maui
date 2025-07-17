@@ -96,4 +96,7 @@
         </Tab>-->
         
     </TabBar>
+    <ShellContent
+        Route="EditProfilePage"
+        ContentTemplate="{DataTemplate views:EditProfilePage}" />
 </Shell>

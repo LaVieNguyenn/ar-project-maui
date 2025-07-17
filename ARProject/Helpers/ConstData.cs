@@ -28,7 +28,9 @@
             /// <summary>
             /// Profile URL
             /// </summary>
-            public const string GET_USER_BY_ID = "/api/v1/Users/";  
+            public const string GET_USER_BY_ID = "/api/v1/Users/";
+
+            public const string UPDATE_USER_BY_ID = "/api/v1/Users/";
         }
 
     }

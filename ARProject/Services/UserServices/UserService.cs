@@ -55,6 +55,29 @@ namespace ARProject.Services.UserServices
             return null;
         }
 
+        public async Task<bool> UpdateProfileAsync(UserProfile updatedProfile)
+        {
+            var token = await SecureStorage.GetAsync(TokenKey);
+            if (string.IsNullOrEmpty(token)) return false;
+
+            _apiService.SetBearerToken(token);
+
+            var success = await _apiService.PutAsync(
+                ConstData.Api.UPDATE_USER_BY_ID + updatedProfile.Id,
+                updatedProfile
+            );
+
+            // Nếu PUT thành công → gọi lại GetProfile để lấy bản mới nhất
+            if (success)
+            {
+                var refreshed = await GetProfileAsync();
+                return refreshed != null;
+            }
+
+            return false;
+        }
+
+
         public async Task SaveProfileAsync(UserProfile user)
         {
             var json = JsonSerializer.Serialize(user);

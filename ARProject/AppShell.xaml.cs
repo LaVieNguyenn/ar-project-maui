@@ -26,6 +26,9 @@ namespace ARProject
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(RegisterStep1), typeof(RegisterStep1));
             Routing.RegisterRoute(nameof(RegisterStep2), typeof(RegisterStep2));
+
+            Routing.RegisterRoute(nameof(EditProfilePage), typeof(EditProfilePage));
+
         }
 
         private FontImageSource CreateIcon(string glyph)

@@ -12,6 +12,9 @@ namespace ARProject.Services.UserServices
         Task RemoveTokenAsync();
 
         Task<UserProfile> GetProfileAsync();
+
+        Task<bool> UpdateProfileAsync(UserProfile updatedProfile);
+
         Task SaveProfileAsync(UserProfile user); 
         Task<UserProfile> LoadLocalProfileAsync();
 

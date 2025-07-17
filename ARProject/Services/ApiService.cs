@@ -51,6 +51,9 @@ namespace ARProject.Services
             var jsonReq = JsonSerializer.Serialize(data);
             var content = new StringContent(jsonReq, Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync(endpoint, content);
+            System.Diagnostics.Debug.WriteLine($"➡ PUT {endpoint}");
+            System.Diagnostics.Debug.WriteLine($"➡ Header: {_httpClient.DefaultRequestHeaders.Authorization}");
+
             return response.IsSuccessStatusCode;
         }
 

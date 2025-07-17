@@ -59,6 +59,11 @@ namespace ARProject
             builder.Services.AddTransient<MeViewModel>();
             builder.Services.AddTransient<MePage>();
             //
+
+            //Edit Profile
+            builder.Services.AddTransient<EditProfilePage>();
+            builder.Services.AddTransient<EditProfileViewModel>();
+
             return builder.Build();
         }
     }
