@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ARMauiApp": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

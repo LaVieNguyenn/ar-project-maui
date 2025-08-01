@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ARMauiApp.Pages.ProductListPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ARMauiApp.ViewModels"
+             xmlns:models="clr-namespace:ARMauiApp.Models"
+             x:DataType="viewmodels:ProductListViewModel"
+             x:Name="ProductsPage"
+             Title="">
+
+    <Grid RowDefinitions="Auto, Auto, *" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+
+        <!-- Search Section với gradient background -->
+        <Frame Grid.Row="0" 
+               BackgroundColor="{StaticResource White}"
+               CornerRadius="0"
+               Padding="0"
+               HasShadow="True">
+            <StackLayout Padding="20,15,20,20">
+                <Image Source="fashion_banner.svg"
+                       HeightRequest="50"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,10" />
+                <!--<Label Text="Khám phá thời trang"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       Margin="0,0,0,15" />-->
+                <Frame BackgroundColor="White"
+                       CornerRadius="25"
+                       Padding="0"
+                       HasShadow="False">
+                    <Entry Placeholder="Tìm kiếm áo, quần, giày..." 
+                           Text="{Binding SearchText}"
+                           ReturnCommand="{Binding SearchProductsCommand}"
+                           HeightRequest="50"
+                           BackgroundColor="Transparent"
+                           PlaceholderColor="{StaticResource Gray400}"
+                           Margin="20,0" />
+                </Frame>
+            </StackLayout>
+        </Frame>
+
+        <!-- Categories Section với design mới -->
+        <StackLayout Grid.Row="1" 
+                     Orientation="Vertical" 
+                     Padding="20,10,20,5"
+                     BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}">
+            <Label Text="Danh mục sản phẩm"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                   Margin="0,0,0,10" />
+
+            <CollectionView ItemsSource="{Binding Categories}"
+                           SelectionMode="Single"
+                           SelectedItem="{Binding SelectedCategory}"
+                           HeightRequest="80">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:CategoryDto">
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                               HasShadow="False"
+                               CornerRadius="15"
+                               Padding="15,10"
+                               WidthRequest="110"
+                               HeightRequest="70">
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProductListViewModel}}, Path=FilterByCategoryCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
+                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="🏷️"
+                                       FontSize="20"
+                                       HorizontalOptions="Center"
+                                       Margin="0,0,0,5" />
+                                <Label Text="{Binding Name}"
+                                       FontSize="11"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray800}, Dark=White}"
+                                       HorizontalOptions="Center"
+                                       HorizontalTextAlignment="Center"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                 Binding="{Binding IsSelected}"
+                                                 Value="True">
+                                            <Setter Property="TextColor" Value="White" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </StackLayout>
+
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame"
+                                           Binding="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProductListViewModel}}, Path=SelectedCategory.Id}"
+                                           Value="{Binding Id}">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </StackLayout>
+        <!-- Products List với design card đẹp -->
+        <RefreshView Grid.Row="2"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshProductsCommand}"
+                     BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}"
+                     Margin="10,5">
+
+            <CollectionView ItemsSource="{Binding Products}"
+                           BackgroundColor="Transparent"
+                           ItemSizingStrategy="MeasureFirstItem">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" 
+                                     Span="2" 
+                                     HorizontalItemSpacing="10"
+                                     VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="50">
+                        <Label Text="�️"
+                               FontSize="80"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        <Label Text="Không tìm thấy sản phẩm"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}"
+                               Margin="0,15,0,5" />
+                        <Label Text="Hãy thử tìm kiếm với từ khóa khác"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ProductDto">
+                        <Grid Padding="5">
+
+                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
+                                   HasShadow="True"
+                                   CornerRadius="15"
+                                   Padding="0">
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference ProductsPage}, Path=BindingContext.ViewProductDetailCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+
+                                <Grid RowDefinitions="110, 105" Padding="0" HeightRequest="215">
+
+                                    <!-- Product Image Section -->
+                                    <Frame Grid.Row="0" 
+                                           Padding="0"
+                                           HasShadow="False"
+                                           BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}">
+                                        <Grid>
+                                            <!-- Product Image - First from Images list (highest priority) -->
+                                            <Image IsVisible="{Binding Images.Count, Converter={StaticResource CountToBoolConverter}}"
+                                                   Aspect="AspectFill">
+                                                <Image.Source>
+                                                    <Binding Path="Images[0]" />
+                                                </Image.Source>
+                                            </Image>
+
+                                            <!-- Fallback to Model3D URL if no Images -->
+                                            <!--<Image Source="{Binding Model3DUrl}"
+                                                   Aspect="AspectFill"
+                                                   IsVisible="{Binding Images.Count, Converter={StaticResource CountToBoolConverter}, ConverterParameter=True}" />-->
+
+                                            <!-- Final fallback placeholder when no images (Model3DUrl will be tried by Image above) -->
+                                            <Label Text="👕"
+                                                   FontSize="28"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center"
+                                                   IsVisible="{Binding Images.Count, Converter={StaticResource CountToBoolConverter}, ConverterParameter=True}" />
+
+                                            <!-- Discount Badge -->
+                                            <Frame BackgroundColor="{StaticResource Primary}"
+                                                   CornerRadius="8"
+                                                   Padding="5,2"
+                                                   HasShadow="False"
+                                                   VerticalOptions="Start"
+                                                   HorizontalOptions="End"
+                                                   Margin="6">
+                                                <Label Text="HOT"
+                                                       FontSize="7"
+                                                       FontAttributes="Bold"
+                                                       TextColor="White" />
+                                            </Frame>
+                                        </Grid>
+                                    </Frame>
+
+                                    <!-- Product Info Section -->
+                                    <StackLayout Grid.Row="1" Spacing="2" Padding="8,6,8,6">
+
+                                        <Label Text="{Binding Name}"
+                                               FontSize="13"
+                                               FontAttributes="Bold"
+                                               TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="1"
+                                               HeightRequest="16"
+                                               VerticalOptions="Start" />
+
+                                        <Label Text="{Binding Description}"
+                                               FontSize="10"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="1"
+                                               HeightRequest="12"
+                                               Margin="0,0,0,2"
+                                               VerticalOptions="Start" />
+
+                                        <Grid ColumnDefinitions="*, 50" Margin="0,1,0,2" HeightRequest="20">
+                                            <!--HorizontalOptions="Start"-->
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding Price, StringFormat='{0:N0} ₫'}"
+                                                   FontSize="13"
+                                                   FontAttributes="Bold"
+                                                   TextColor="{StaticResource Primary}"
+                                                   VerticalOptions="Center"
+                                                   LineBreakMode="TailTruncation" />
+
+                                            <Frame Grid.Column="1"
+                                                   BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                                                   CornerRadius="6"
+                                                   Padding="3,1"
+                                                   HasShadow="False"
+                                                   HorizontalOptions="End"
+                                                   VerticalOptions="Center"
+                                                   WidthRequest="45"
+                                                   HeightRequest="18">
+                                                <Label Text="⭐ 4.8"
+                                                       FontSize="8"
+                                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"
+                                                       VerticalOptions="Center"
+                                                       HorizontalOptions="Center" />
+                                            </Frame>
+                                        </Grid>
+
+                                        <Button Text="Xem chi tiết"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProductListViewModel}}, Path=ViewProductDetailCommand}"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="{StaticResource Primary}"
+                                                TextColor="White"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                HeightRequest="28"
+                                                Padding="8,0"
+                                                CornerRadius="14"
+                                                Margin="0,4,0,0"
+                                                VerticalOptions="End" />
+
+                                    </StackLayout>
+
+                                </Grid>
+
+                            </Frame>
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </RefreshView>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="2"
+                          IsVisible="{Binding IsLoading}"
+                          IsRunning="{Binding IsLoading}"
+                          Color="{StaticResource Primary}"
+                          VerticalOptions="Center"
+                          HorizontalOptions="Center" />
+
+    </Grid>
+
+</ContentPage>

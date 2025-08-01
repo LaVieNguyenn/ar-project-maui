@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ARMauiApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:ARMauiApp.Pages"
+    Title="ARMauiApp"
+    FlyoutBehavior="Disabled">
+
+    <!-- Splash Screen -->
+    <ShellContent x:Name="SplashShell"
+                  Route="splash"
+                  ContentTemplate="{DataTemplate pages:SplashPage}"
+                  Shell.FlyoutBehavior="Disabled" />
+
+    <!-- Authentication Shell -->
+    <ShellContent x:Name="LoginShell"
+                  Route="login"
+                  ContentTemplate="{DataTemplate pages:LoginPage}"
+                  Shell.FlyoutBehavior="Disabled" />
+
+    <ShellContent x:Name="RegisterShell"
+                  Route="register"
+                  ContentTemplate="{DataTemplate pages:RegisterPage}"
+                  Shell.FlyoutBehavior="Disabled" />
+
+    <!-- Main App Shell with TabBar -->
+    <TabBar x:Name="MainTabBar" Route="main">
+        
+        <!-- Products Tab -->
+        <ShellContent Title="Sản phẩm"
+                      Route="products"
+                      ContentTemplate="{DataTemplate pages:ProductListPage}"
+                      Icon="shop.svg" />
+
+        <ShellContent Title="Giỏ hàng"
+                  Route="cart"
+                  ContentTemplate="{DataTemplate pages:CartPage}"
+                  Icon="cart.svg" />
+
+        <!-- Account Tab -->
+        <ShellContent Title="Tài khoản"
+                      Route="account"
+                      ContentTemplate="{DataTemplate pages:AccountPage}"
+                      Icon="user.svg" />
+
+    </TabBar>
+
+</Shell>

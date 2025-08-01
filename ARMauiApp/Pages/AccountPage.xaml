@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ARMauiApp.Pages.AccountPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Tài khoản">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+
+            <!-- Profile Header -->
+            <Frame BackgroundColor="{StaticResource Primary}"
+                   HasShadow="True"
+                   CornerRadius="15"
+                   Padding="20">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <Frame WidthRequest="80"
+                           HeightRequest="80"
+                           CornerRadius="40"
+                           Padding="0"
+                           HasShadow="False"
+                           BackgroundColor="White">
+                        <Label Text="👤"
+                               FontSize="40"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               TextColor="{StaticResource Primary}" />
+                    </Frame>
+                    <StackLayout VerticalOptions="Center" Spacing="5">
+                        <Label Text="{Binding CurrentUser.Username, FallbackValue='Đang tải...'}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label Text="{Binding CurrentUser.Email, FallbackValue='Đang tải...'}"
+                               FontSize="14"
+                               TextColor="White"
+                               Opacity="0.8" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Menu Items -->
+            <StackLayout Spacing="10">
+
+                <!-- Profile Settings -->
+                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
+                       HasShadow="True"
+                       CornerRadius="10"
+                       Padding="0">
+                    <StackLayout>
+
+                        <Grid Padding="15" ColumnDefinitions="Auto, *, Auto">
+                            <Label Grid.Column="0"
+                                   Text="✏️"
+                                   FontSize="20"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="Chỉnh sửa hồ sơ"
+                                   FontSize="16"
+                                   VerticalOptions="Center"
+                                   Margin="15,0,0,0" />
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="16"
+                                   VerticalOptions="Center" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditProfileTapped" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+
+                        <Grid Padding="15" ColumnDefinitions="Auto, *, Auto">
+                            <Label Grid.Column="0"
+                                   Text="🔑"
+                                   FontSize="20"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="Đổi mật khẩu"
+                                   FontSize="16"
+                                   VerticalOptions="Center"
+                                   Margin="15,0,0,0" />
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="16"
+                                   VerticalOptions="Center" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnChangePasswordTapped" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                    </StackLayout>
+                </Frame>
+
+                <!-- Settings -->
+                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
+                       HasShadow="True"
+                       CornerRadius="10"
+                       Padding="0">
+                    <StackLayout>
+
+                        <Grid Padding="15" ColumnDefinitions="Auto, *, Auto">
+                            <Label Grid.Column="0"
+                                   Text="⚙️"
+                                   FontSize="20"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="Cài đặt"
+                                   FontSize="16"
+                                   VerticalOptions="Center"
+                                   Margin="15,0,0,0" />
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="16"
+                                   VerticalOptions="Center" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSettingsTapped" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+
+                        <Grid Padding="15" ColumnDefinitions="Auto, *, Auto">
+                            <Label Grid.Column="0"
+                                   Text="❓"
+                                   FontSize="20"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="Trợ giúp &amp; Hỗ trợ"
+                                   FontSize="16"
+                                   VerticalOptions="Center"
+                                   Margin="15,0,0,0" />
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="16"
+                                   VerticalOptions="Center" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnHelpTapped" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                    </StackLayout>
+                </Frame>
+
+                <!-- App Info -->
+                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
+                       HasShadow="True"
+                       CornerRadius="10"
+                       Padding="15">
+                    <StackLayout Spacing="5">
+                        <Label Text="Phiên bản ứng dụng: 1.0.0"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" />
+                        <Label Text="Xây dựng với .NET MAUI &amp; UraniumUI"
+                               FontSize="12"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Logout Button -->
+                <Button Text="Đăng xuất"
+                        BackgroundColor="{StaticResource Danger}"
+                        TextColor="White"
+                        HeightRequest="50"
+                        CornerRadius="25"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        Margin="0,20,0,0"
+                        Clicked="OnLogoutClicked" />
+
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,9 @@
+<ContentPage
+    x:Class="ARMauiApp.Pages.LoadingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="16">
+        <ActivityIndicator IsRunning="True" />
+        <Label Text="Ứng dụng sẽ được làm mới để đảm bảo hiệu năng tốt nhất" HorizontalOptions="Center"/>
+    </StackLayout>
+</ContentPage>

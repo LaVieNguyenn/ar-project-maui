@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ARMauiApp.Pages.RegisterPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ARMauiApp.ViewModels"
+             x:DataType="viewmodels:RegisterViewModel"
+             Title="Đăng ký"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource Gray900}}">
+        <StackLayout Padding="30" Spacing="20">
+            
+            <!-- Header -->
+            <StackLayout Margin="0,20,0,30">
+                <Label Text="Tạo tài khoản" 
+                       FontSize="28" 
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="{StaticResource Primary}" />
+                <Label Text="Tham gia cùng chúng tôi hôm nay!" 
+                       FontSize="16" 
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" 
+                       Margin="0,5,0,0" />
+            </StackLayout>
+
+            <!-- Form Card -->
+            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
+                   CornerRadius="15"
+                   HasShadow="True"
+                   Padding="25">
+                
+                <StackLayout Spacing="18">
+
+                    <!-- Username -->
+                    <StackLayout>
+                        <Label Text="Tên người dùng" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                               CornerRadius="8"
+                               Padding="0"
+                               HasShadow="False">
+                            <Entry Text="{Binding Username}"
+                                   Placeholder="Nhập tên người dùng"
+                                   HeightRequest="50"
+                                   BackgroundColor="Transparent" />
+                        </Frame>
+                    </StackLayout>
+
+                    <!-- Email -->
+                    <StackLayout>
+                        <Label Text="Email" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                               CornerRadius="8"
+                               Padding="0"
+                               HasShadow="False">
+                            <Entry Text="{Binding Email}"
+                                   Keyboard="Email"
+                                   Placeholder="Nhập email"
+                                   HeightRequest="50"
+                                   BackgroundColor="Transparent" />
+                        </Frame>
+                    </StackLayout>
+
+                    <!-- Birthday -->
+                    <StackLayout>
+                        <Label Text="Ngày sinh" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                               CornerRadius="8"
+                               Padding="0"
+                               HasShadow="False">
+                            <DatePicker Date="{Binding Birthday}"
+                                       HeightRequest="50"
+                                       Format="dd/MM/yyyy"
+                                       MinimumDate="01/01/1950"
+                                       MaximumDate="{Binding MaxBirthday}"
+                                       BackgroundColor="Transparent" />
+                        </Frame>
+                    </StackLayout>
+
+                    <!-- Password -->
+                    <StackLayout>
+                        <Label Text="Mật khẩu" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                               CornerRadius="8"
+                               Padding="0"
+                               HasShadow="False">
+                            <Entry Text="{Binding Password}"
+                                   IsPassword="True"
+                                   Placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)"
+                                   HeightRequest="50"
+                                   BackgroundColor="Transparent" />
+                        </Frame>
+                    </StackLayout>
+
+                    <!-- Gender -->
+                    <StackLayout>
+                        <Label Text="Giới tính" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                               CornerRadius="8"
+                               Padding="0"
+                               HasShadow="False">
+                            <Picker ItemsSource="{Binding GenderOptions}"
+                                    SelectedIndex="{Binding SelectedGender}"
+                                    HeightRequest="50"
+                                    BackgroundColor="Transparent" />
+                        </Frame>
+                    </StackLayout>
+
+                    <!-- Height & Weight Row -->
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                        <!-- Height -->
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Chiều cao (cm)" 
+                                   FontSize="16" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                                   CornerRadius="8"
+                                   Padding="0"
+                                   HasShadow="False">
+                                <Entry Text="{Binding Height}"
+                                       Keyboard="Numeric"
+                                       Placeholder="170"
+                                       HeightRequest="50"
+                                       BackgroundColor="Transparent" />
+                            </Frame>
+                        </StackLayout>
+
+                        <!-- Weight -->
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Cân nặng (kg)" 
+                                   FontSize="16" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
+                                   CornerRadius="8"
+                                   Padding="0"
+                                   HasShadow="False">
+                                <Entry Text="{Binding Weight}"
+                                       Keyboard="Numeric"
+                                       Placeholder="70"
+                                       HeightRequest="50"
+                                       BackgroundColor="Transparent" />
+                            </Frame>
+                        </StackLayout>
+                    </Grid>
+
+                </StackLayout>
+            </Frame>
+
+            <!-- Register Button -->
+            <Button Text="Tạo tài khoản" 
+                    Command="{Binding RegisterCommand}"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    Margin="0,20,0,0" />
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsVisible="{Binding IsLoading}"
+                              IsRunning="{Binding IsLoading}"
+                              Color="{StaticResource Primary}" />
+
+            <!-- Login Link -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,15,0,0">
+                <Label Text="Đã có tài khoản?" />
+                <Label Text="Đăng nhập" 
+                       TextColor="{StaticResource Primary}" 
+                       FontAttributes="Bold"
+                       Margin="5,0,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToLoginCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

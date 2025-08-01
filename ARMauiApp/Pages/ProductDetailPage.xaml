@@ -1,0 +1,165 @@
+<ContentPage x:Class="ARMauiApp.Pages.ProductDetailPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ARMauiApp.ViewModels"
+             x:DataType="viewmodels:ProductDetailViewModel"
+             Title="Chi tiết sản phẩm">
+
+    <Grid>
+        <!-- Main Content -->
+        <ScrollView>
+            <StackLayout Spacing="0">
+
+                <!-- Product Images Carousel -->
+                <Frame HeightRequest="300"
+                   Padding="0"
+                   CornerRadius="0"
+                   HasShadow="False"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}">
+
+                    <!-- Display images if available, otherwise show placeholder -->
+                    <Grid>
+                        <!-- Image Carousel -->
+                        <CarouselView ItemsSource="{Binding Product.Images}"
+                                  HeightRequest="300"
+                                  IndicatorView="indicatorView"
+                                  IsVisible="{Binding Product.Images.Count, Converter={StaticResource CountToBoolConverter}}">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding .}"
+                                       Aspect="AspectFill"
+                                       HeightRequest="300" />
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+
+                        <!-- Image Indicators -->
+                        <IndicatorView x:Name="indicatorView"
+                                   VerticalOptions="End"
+                                   HorizontalOptions="Center"
+                                   Margin="0,0,0,20"
+                                   IndicatorColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                                   SelectedIndicatorColor="{StaticResource Primary}"
+                                   IsVisible="{Binding Product.Images.Count, Converter={StaticResource CountToBoolConverter}}" />
+
+                        <!-- Placeholder when no images -->
+                        <Label Text="📷"
+                           FontSize="120"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           IsVisible="{Binding Product.Images.Count, Converter={StaticResource CountToBoolConverter}, ConverterParameter=True}" />
+                    </Grid>
+                </Frame>
+
+                <!-- Product Info -->
+                <StackLayout Padding="20" Spacing="15">
+
+                    <!-- Product Name -->
+                    <Label Text="{Binding Product.Name, FallbackValue='Đang tải tên sản phẩm...'}"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                    <!-- Price -->
+                    <Label Text="{Binding Product.Price, StringFormat='{0:N0} ₫', FallbackValue='0 ₫'}"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource Primary}" />
+
+                    <!-- Description -->
+                    <Label Text="{Binding Product.Description, FallbackValue='Không có mô tả nào'}"
+                       FontSize="16"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"
+                       LineBreakMode="WordWrap" />
+
+                    <!-- Size Selection -->
+                    <StackLayout IsVisible="{Binding Product.Sizes.Count, Converter={StaticResource CountToBoolConverter}}"
+                           Spacing="10">
+                        <Label Text="Kích thước:"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                        <Picker ItemsSource="{Binding Product.Sizes}"
+                            SelectedItem="{Binding SelectedSize}"
+                            HeightRequest="45" />
+                    </StackLayout>
+
+                    <!-- Product Details Grid -->
+                    <Frame BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray800}}"
+                       HasShadow="False"
+                       CornerRadius="8"
+                       Padding="15">
+                        <Grid RowDefinitions="Auto, Auto, Auto" 
+                          ColumnDefinitions="*, *"
+                          RowSpacing="10"
+                          ColumnSpacing="15">
+
+                            <Label Grid.Row="0" Grid.Column="0"
+                               Text="Danh mục:"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" />
+                            <Label Grid.Row="0" Grid.Column="1"
+                               Text="{Binding CategoryName, FallbackValue='Đang tải...'}"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                            <Label Grid.Row="1" Grid.Column="0"
+                               Text="Ngày tạo:"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" />
+                            <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding Product.CreatedAt, StringFormat='{0:dd/MM/yyyy}'}"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                            <Label Grid.Row="2" Grid.Column="0"
+                               Text="Trạng thái:"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" />
+                            <Label Grid.Row="2" Grid.Column="1"
+                               Text="{Binding Product.IsActive, Converter={StaticResource BoolToActiveStatusConverter}}"
+                               TextColor="{Binding Product.IsActive, Converter={StaticResource BoolToStatusColorConverter}}" />
+
+                        </Grid>
+                    </Frame>
+
+                    <!-- Action Buttons -->
+                    <StackLayout Spacing="10" Margin="0,20,0,0">
+
+                        <Button         
+                            Text="Thêm vào giỏ hàng"
+                            Command="{Binding AddToCartCommand}"
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="White"
+                            HeightRequest="50"
+                            CornerRadius="25"
+                            FontSize="18"
+                            FontAttributes="Bold" />
+
+                        <Button Text="Quay lại danh sách"
+                            Command="{Binding GoBackCommand}"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource Primary}"
+                            BorderColor="{StaticResource Primary}"
+                            BorderWidth="2"
+                            HeightRequest="50"
+                            CornerRadius="25"
+                            FontSize="16" />
+
+                    </StackLayout>
+
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Loading Indicator Overlay -->
+        <Grid IsVisible="{Binding IsLoading}"
+              BackgroundColor="{AppThemeBinding Light=#80FFFFFF, Dark=#80000000}">
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                              Color="{StaticResource Primary}"
+                              VerticalOptions="Center"
+                              HorizontalOptions="Center"
+                              Scale="1.5" />
+        </Grid>
+    </Grid>
+</ContentPage>

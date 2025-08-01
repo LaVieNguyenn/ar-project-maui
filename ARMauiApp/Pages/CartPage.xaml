@@ -1,0 +1,86 @@
+<ContentPage
+    x:Class="ARMauiApp.Pages.CartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Giỏ hàng">
+
+    <Grid RowDefinitions="*,Auto,Auto">
+        <!-- Loading Overlay -->
+        <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#88000000" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" ZIndex="2">
+            <ActivityIndicator IsRunning="True" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="64" HeightRequest="64"/>
+        </Grid>
+
+        <!-- Hàng 1: CollectionView fill toàn bộ -->
+        <RefreshView
+            Grid.Row="0"
+            IsRefreshing="{Binding IsRefreshing}"
+            Command="{Binding RefreshCartCommand}">
+            <CollectionView x:Name="CartCollectionView"
+                            ItemsSource="{Binding CartItems}"
+                            Margin="10,0,10,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem
+                                        Text="Xóa"
+                                        BackgroundColor="IndianRed"
+                                        IconImageSource="trash.png"
+                                        Command="{Binding BindingContext.RemoveItemCommand, Source={x:Reference CartCollectionView}}"
+                                        CommandParameter="{Binding ProductId}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame Margin="0,5" Padding="8" BorderColor="#EEE" CornerRadius="12">
+                                <Grid ColumnDefinitions="80,*,Auto" RowDefinitions="Auto,Auto" VerticalOptions="Center">
+                                    <Image Grid.RowSpan="2" Grid.Column="0"
+                                           HeightRequest="64" WidthRequest="64"
+                                           Aspect="AspectFill"
+                                           Source="{Binding ImageUrl}" />
+                                    <Label Grid.Column="1" Text="{Binding ProductName}" FontAttributes="Bold" FontSize="16"/>
+                                    <Label Grid.Column="2" Text="{Binding Price, StringFormat='{0:N0}₫'}" TextColor="DarkGreen" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalOptions="Center">
+                                        <Button Text="-" WidthRequest="32" HeightRequest="32" Padding="0"
+                                                Command="{Binding BindingContext.DecreaseQuantityCommand, Source={x:Reference CartCollectionView}}"
+                                                CommandParameter="{Binding ProductId}"
+                                                IsEnabled="{Binding Quantity, Converter={StaticResource GreaterThanOneConverter}}"
+                                                FontSize="18"/>
+                                        <Entry Text="{Binding Quantity, Mode=TwoWay}" WidthRequest="48" Keyboard="Numeric"
+                                               HorizontalTextAlignment="Center" FontSize="15" 
+                                               BackgroundColor="#F5F5F5" />
+                                        <Button Text="+" WidthRequest="32" HeightRequest="32" Padding="0"
+                                                Command="{Binding BindingContext.IncreaseQuantityCommand, Source={x:Reference CartCollectionView}}"
+                                                CommandParameter="{Binding ProductId}" FontSize="18"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Image Source="empty_cart.png" HeightRequest="100"/>
+                        <Label Text="Giỏ hàng trống" FontAttributes="Bold" FontSize="18" Margin="0,16,0,0"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Hàng 2: Tổng tiền luôn ở trên nút Thử đồ -->
+        <StackLayout Grid.Row="1" Orientation="Horizontal" Padding="15,5" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+            <Label Text="Tổng cộng:" FontAttributes="Bold"/>
+            <Label Text="{Binding TotalAmount, StringFormat='{0:N0}₫'}" FontAttributes="Bold" TextColor="DarkGreen" Margin="10,0,0,0"/>
+        </StackLayout>
+
+        <!-- Hàng 3: Nút Thử đồ luôn nằm sát dưới cùng, không che tổng tiền -->
+        <Button Grid.Row="2"
+                Text="Thử đồ"
+                Command="{Binding TryOnCartCommand}"
+                IsEnabled="{Binding CartItems.Count, Converter={StaticResource GreaterThanZeroConverter}}"
+                Margin="15,5,15,15"
+                HeightRequest="50"
+                BackgroundColor="#FF6500"
+                TextColor="White"
+                CornerRadius="12"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ARMauiApp.Pages.EditProfilePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             Title="Chỉnh sửa hồ sơ">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+
+            <!-- Avatar Section -->
+            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
+                   HasShadow="True"
+                   CornerRadius="15"
+                   Padding="20">
+                <StackLayout Spacing="15">
+                    <Label Text="Ảnh đại diện"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+                    
+                    <Frame WidthRequest="100"
+                           HeightRequest="100"
+                           CornerRadius="50"
+                           Padding="0"
+                           HasShadow="False"
+                           BackgroundColor="{StaticResource Primary}"
+                           HorizontalOptions="Center">
+                        <Label Text="👤"
+                               FontSize="50"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               TextColor="White" />
+                    </Frame>
+                    
+                    <Button Text="Đổi ảnh đại diện"
+                            BackgroundColor="{StaticResource Secondary}"
+                            TextColor="White"
+                            HeightRequest="40"
+                            CornerRadius="20"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            WidthRequest="150" />
+                </StackLayout>
+            </Frame>
+
+            <!-- User Information Form -->
+            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
+                   HasShadow="True"
+                   CornerRadius="15"
+                   Padding="20">
+                <StackLayout Spacing="15">
+                    <Label Text="Thông tin cá nhân"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+
+                    <!-- Username -->
+                    <StackLayout Spacing="5">
+                        <Label Text="Tên người dùng *" FontSize="14" />
+                        <material:TextField Text="{Binding Username}"
+                                         Title="Nhập tên người dùng"
+                                         IsEnabled="{Binding IsEditMode}" />
+                    </StackLayout>
+
+                    <!-- Email -->
+                    <StackLayout Spacing="5">
+                        <Label Text="Email *" FontSize="14" />
+                        <material:TextField Text="{Binding Email}"
+                                         Title="Nhập email"
+                                         Keyboard="Email"
+                                         IsEnabled="{Binding IsEditMode}" />
+                    </StackLayout>
+
+                    <!-- Gender -->
+                    <StackLayout Spacing="5">
+                        <Label Text="Giới tính" FontSize="14" />
+                        <material:PickerField ItemsSource="{Binding GenderOptions}"
+                                           SelectedIndex="{Binding Gender}"
+                                           IsEnabled="{Binding IsEditMode}" />
+                    </StackLayout>
+
+                    <!-- Height -->
+                    <StackLayout Spacing="5">
+                        <Label Text="Chiều cao (cm)" FontSize="14" />
+                        <material:TextField Text="{Binding Height}"
+                                         Title="Nhập chiều cao"
+                                         Keyboard="Numeric"
+                                         IsEnabled="{Binding IsEditMode}" />
+                    </StackLayout>
+
+                    <!-- Weight -->
+                    <StackLayout Spacing="5">
+                        <Label Text="Cân nặng (kg)" FontSize="14" />
+                        <material:TextField Text="{Binding Weight}"
+                                         Title="Nhập cân nặng"
+                                         Keyboard="Numeric"
+                                         IsEnabled="{Binding IsEditMode}" />
+                    </StackLayout>
+
+                </StackLayout>
+            </Frame>
+
+            <!-- Action Buttons -->
+            <StackLayout Spacing="10" IsVisible="{Binding IsEditMode}">
+                <Button Text="Lưu thay đổi"
+                        Command="{Binding SaveCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        HeightRequest="50"
+                        CornerRadius="25"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
+
+                <Button Text="Hủy"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="{StaticResource Gray300}"
+                        TextColor="{StaticResource Gray800}"
+                        HeightRequest="50"
+                        CornerRadius="25"
+                        FontSize="16"
+                        IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
+            </StackLayout>
+
+            <StackLayout Spacing="10" IsVisible="{Binding IsEditMode, Converter={StaticResource InvertedBoolConverter}}">
+                <Button Text="Chỉnh sửa"
+                        Command="{Binding EditCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        HeightRequest="50"
+                        CornerRadius="25"
+                        FontSize="16"
+                        FontAttributes="Bold" />
+            </StackLayout>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsVisible="{Binding IsLoading}"
+                             IsRunning="{Binding IsLoading}"
+                             Color="{StaticResource Primary}"
+                             HeightRequest="40" />
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
