@@ -83,9 +83,7 @@ nunit-*.xml
 # User-specific files
 *.rsuser
 *.suo
-*.user
 *.userosscache
-*.sln.docstates
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -464,10 +462,6 @@ FodyWeavers.xsd
 [Ll]ogs/
 [Oo]bj/
 [Mm]emoryCaptures/
-*.csproj
-*.unityproj
-*.sln
-*.user
 *.userprefs
 *.pidb
 *.booproj
