@@ -407,3 +407,7 @@ Beta
 0 / 0
 used queries
 1
+
+# Ignore AAR files in Jars folder
+AndroidBridge/Jars/mediapipe_android.aar
+AndroidBridge/Jars/unityLibrary.aar

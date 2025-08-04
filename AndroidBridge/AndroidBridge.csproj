@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-android35.0</TargetFramework>
+    <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!--
+      Enable trim analyzers for Android class libraries.
+      To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming
+    -->
+    <!--<IsTrimmable>true</IsTrimmable>-->
+    <!--
+      NOTE: you can simply add .aar or .jar files in this directory to be included in the project.
+      To learn more, see: https://learn.microsoft.com/dotnet/maui/migration/android-binding-projects
+    -->
+  </PropertyGroup>
+  <ItemGroup>
+    <AndroidLibrary Update="Jars\mediapipe_android.aar">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </AndroidLibrary>
+    <AndroidLibrary Update="Jars\unityLibrary.aar">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </AndroidLibrary>
+  </ItemGroup>
+</Project>
