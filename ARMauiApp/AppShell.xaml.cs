@@ -1,12 +1,32 @@
 using ARMauiApp.Pages;
+using ARMauiApp.Services;
 
 namespace ARMauiApp;
 
 public partial class AppShell : Shell
 {
-    public AppShell()
+    readonly ITabBadgeService _badgeSvc;
+    readonly CartService _cart;
+    const int CartTabIndex = 1;
+    public AppShell(ITabBadgeService badgeSvc, CartService cart)
     {
         InitializeComponent();
+        _badgeSvc = badgeSvc;
+        _cart = cart;
+
+#if ANDROID
+        HandlerChanged += (_, __) => ApplyBadge(_cart.LastCount);
+        Loaded += (_, __) => ApplyBadge(_cart.LastCount);
+        Navigated += (_, __) => ApplyBadge(_cart.LastCount);
+        PropertyChanged += (_, e) => { if (e.PropertyName == nameof(CurrentItem)) ApplyBadge(_cart.LastCount); };
+#endif
+        _cart.CountChanged += (_, count) => ApplyBadge(count);
+
+        _ = Task.Run(async () =>
+        {
+            var count = await _cart.RefreshCountAsync();
+            ApplyBadge(count);
+        });
 
 #if ANDROID
         MainThread.BeginInvokeOnMainThread(() =>
@@ -20,6 +40,7 @@ public partial class AppShell : Shell
         });
 #endif
 
+
         // Register routes for navigation
         Routing.RegisterRoute("productdetail", typeof(ProductDetailPage));
         Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
@@ -27,4 +48,12 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(LoadingPage), typeof(LoadingPage));
         Routing.RegisterRoute(nameof(PlanQrPopup), typeof(PlanQrPopup));
     }
+
+#if ANDROID
+    void ApplyBadge(int count)
+    {
+        if (Handler is null) return;
+        Dispatcher.Dispatch(() => _badgeSvc.SetBadge(this, CartTabIndex, count));
+    }
+#endif
 }

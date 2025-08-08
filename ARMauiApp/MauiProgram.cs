@@ -1,5 +1,6 @@
 using ARMauiApp.Converters;
 using ARMauiApp.Pages;
+using ARMauiApp.Platforms.Android;
 using ARMauiApp.Services;
 using ARMauiApp.Unity;
 using ARMauiApp.ViewModels;
@@ -27,6 +28,9 @@ public static class MauiProgram
                 fonts.AddMaterialSymbolsFonts();
             });
 
+        builder.Services.AddSingleton<AppShell>();
+
+
         // Register Services
         builder.Services.AddSingleton<AuthService>();
         builder.Services.AddSingleton<UserService>();
@@ -36,6 +40,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<CartService>();
         builder.Services.AddSingleton<PlanService>();
         builder.Services.AddSingleton<PlanPaymentService>();
+        builder.Services.AddSingleton<ITabBadgeService, TabBadgeService>();
+
 
 
         // Register Converters
