@@ -75,7 +75,7 @@
                Margin="0,0,2,0"
                WidthRequest="190"/>
                         <!-- Đặt chiều rộng cố định để luôn ellipsis -->
-                        <ImageButton Source="copy_icon.png"
+                        <ImageButton Source="copy.png"
                      Command="{Binding CopyPaymentContentCommand}"
                      Padding="3"
                      WidthRequest="22"
