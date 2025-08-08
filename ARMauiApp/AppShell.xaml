@@ -44,6 +44,11 @@
                       ContentTemplate="{DataTemplate pages:AccountPage}"
                       Icon="user.svg" />
 
+        <ShellContent Title="Gói"
+                      Route="plans"
+                      ContentTemplate="{DataTemplate pages:PlansPage}"
+                      Icon="subscription.png" />
+
     </TabBar>
 
 </Shell>

@@ -25,5 +25,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
         Routing.RegisterRoute("editprofile", typeof(EditProfilePage));
         Routing.RegisterRoute(nameof(LoadingPage), typeof(LoadingPage));
+        Routing.RegisterRoute(nameof(PlanQrPopup), typeof(PlanQrPopup));
     }
 }

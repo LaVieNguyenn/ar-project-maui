@@ -5,6 +5,7 @@ using ARMauiApp.Unity;
 using ARMauiApp.ViewModels;
 using CommunityToolkit.Maui;
 using UraniumUI;
+using ZXing.Net.Maui.Controls;
 
 namespace ARMauiApp;
 
@@ -14,6 +15,7 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
+            .UseBarcodeReader()
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseUraniumUI()
@@ -32,12 +34,20 @@ public static class MauiProgram
         builder.Services.AddSingleton<CategoryService>();
         builder.Services.AddSingleton<TokenService>();
         builder.Services.AddSingleton<CartService>();
+        builder.Services.AddSingleton<PlanService>();
+        builder.Services.AddSingleton<PlanPaymentService>();
+
 
         // Register Converters
         builder.Services.AddSingleton<CountToBoolConverter>();
         builder.Services.AddSingleton<InvertedBoolConverter>();
         builder.Services.AddSingleton<BoolToActiveStatusConverter>();
         builder.Services.AddSingleton<BoolToStatusColorConverter>();
+        builder.Services.AddSingleton<GreaterThanZeroConverter>();
+        builder.Services.AddSingleton<EqualsMultiConverter>();
+        builder.Services.AddSingleton<BoolNegateConverter>();
+        builder.Services.AddSingleton<DiscountPriceConverter>();
+        builder.Services.AddSingleton<BrushResourceConverter>();
 
         // Register ViewModels
         builder.Services.AddTransient<LoginViewModel>();
@@ -46,6 +56,9 @@ public static class MauiProgram
         builder.Services.AddTransient<ProductDetailViewModel>();
         builder.Services.AddTransient<AccountViewModel>();
         builder.Services.AddTransient<CartViewModel>();
+        builder.Services.AddTransient<PlanListViewModel>();
+        builder.Services.AddTransient<PlanQrPopupViewModel>();
+
 
         // Register Pages
         builder.Services.AddTransient<SplashPage>();
@@ -57,6 +70,8 @@ public static class MauiProgram
         builder.Services.AddTransient<EditProfilePage>();
         builder.Services.AddTransient<CartPage>();
         builder.Services.AddTransient<LoadingPage>();
+        builder.Services.AddTransient<PlansPage>();
+        builder.Services.AddTransient<PlanQrPopup>();
 
         UnityBridge.Init();
 

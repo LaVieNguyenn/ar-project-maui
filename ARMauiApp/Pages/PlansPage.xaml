@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ARMauiApp.Pages.PlansPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ARMauiApp.ViewModels"
+             xmlns:models="clr-namespace:ARMauiApp.Models"
+             xmlns:conv="clr-namespace:ARMauiApp.Converters"
+             x:DataType="viewmodels:PlanListViewModel"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#0f0f10}"
+             Title="Gói dịch vụ">
+
+    <!-- ========= Resources ========= -->
+    <ContentPage.Resources>
+        <!-- Converters -->
+        <conv:EqualsMultiConverter x:Key="EqualsMultiConverter"/>
+        <conv:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter"/>
+        <conv:DiscountPriceConverter x:Key="DiscountPriceConverter"/>
+        <conv:BrushResourceConverter x:Key="BrushResourceConverter"/>
+
+        <x:Double x:Key="CardWidth">340</x:Double>
+        <x:Double x:Key="CardHeight">480</x:Double>
+        <x:Double x:Key="ChipSize">56</x:Double>
+        <x:Double x:Key="ChipHalf">28</x:Double>
+        <x:Double x:Key="CardHeightWithChip">508</x:Double>
+        <!-- 480 + 28 -->
+
+        <!-- Scrim tăng tương phản chữ -->
+        <SolidColorBrush x:Key="CardScrim" Color="#26000000"/>
+
+        <!-- Glow nhẹ dưới giá (tuỳ chọn) -->
+        <RadialGradientBrush x:Key="PriceGlow" Center="0.5,0.5" Radius="0.6">
+            <GradientStop Color="#26FFFFFF" Offset="0"/>
+            <GradientStop Color="#00FFFFFF" Offset="1"/>
+        </RadialGradientBrush>
+
+        <!-- Shadows -->
+        <Shadow x:Key="CardShadow" Radius="24" Offset="0,10" Brush="#30000000"/>
+        <Shadow x:Key="TextShadow" Radius="6" Offset="0,1" Brush="#80000000"/>
+        <Shadow x:Key="BtnShadow"  Radius="12" Offset="0,8" Brush="#22000000"/>
+    </ContentPage.Resources>
+
+    <!-- ========= Layout ========= -->
+    <Grid RowDefinitions="Auto,*,Auto" Padding="0,10,0,10">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Padding="20,8,20,0" Spacing="6">
+            <Label Text="Các gói dịch vụ"
+                   FontAttributes="Bold"
+                   CharacterSpacing="2"
+                   FontSize="14"
+                   TextColor="{AppThemeBinding Light=#111, Dark=#EEE}"
+                   HorizontalOptions="Center"/>
+            <Label Text="Hãy chọn ngay một gói phù hợp với nhu cầu của bạn"
+                   FontSize="12"
+                   TextColor="{AppThemeBinding Light=#6b7280, Dark=#a0aec0}"
+                   HorizontalTextAlignment="Center"
+                   Margin="24,0"/>
+        </VerticalStackLayout>
+
+        <!-- Carousel: snap vào giữa -->
+        <CarouselView Grid.Row="1"
+                      ItemsSource="{Binding Plans}"
+                      IndicatorView="{x:Reference indicators}"
+                      PeekAreaInsets="0"
+                      IsBounceEnabled="True"
+                      IsScrollAnimated="True"
+                      Loop="False"
+                      HorizontalScrollBarVisibility="Never"
+                      HeightRequest="560">
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal"
+                                   ItemSpacing="18"
+                                   SnapPointsType="MandatorySingle"
+                                   SnapPointsAlignment="Center"/>
+            </CarouselView.ItemsLayout>
+
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="models:PlanDto">
+                    <!-- Parent đủ cao để chứa nửa chip phía trên -->
+                    <AbsoluteLayout WidthRequest="{StaticResource CardWidth}"
+                    HeightRequest="{StaticResource CardHeightWithChip}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                        <!-- CARD: đặt thấp xuống 1/2 chip, cố định size -->
+                        <Border AbsoluteLayout.LayoutBounds="0.5,0,AutoSize,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                WidthRequest="{StaticResource CardWidth}"
+                HeightRequest="{StaticResource CardHeight}"
+                TranslationY="{StaticResource ChipHalf}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 28"
+                Background="{Binding UiBrushKey, Converter={StaticResource BrushResourceConverter}}"
+                Shadow="{StaticResource CardShadow}">
+                            <Grid>
+                                <Border Background="{StaticResource CardScrim}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 28"/>
+
+                                <!-- Nội dung -->
+                                <VerticalStackLayout Padding="22,40,22,22" Spacing="14">
+
+                                    <Label Text="{Binding Name}"
+                           FontSize="22" TextTransform="Uppercase"
+                           FontAttributes="Bold" TextColor="White"
+                           HorizontalOptions="Center"
+                           Shadow="{StaticResource TextShadow}"/>
+
+                                    <Label Text="{Binding Description}"
+                           FontSize="13" TextColor="#F2F5FF" Opacity="0.92"
+                           HorizontalTextAlignment="Center" Margin="6,0"
+                           Shadow="{StaticResource TextShadow}"/>
+
+                                    <!-- Khu vực giá + glow -->
+                                    <Grid HorizontalOptions="Center" Margin="0,6,0,2">
+                                        <Border Background="{StaticResource PriceGlow}"
+                                WidthRequest="160" HeightRequest="160"
+                                StrokeThickness="0" StrokeShape="Ellipse"
+                                Opacity="0.65"/>
+                                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center" VerticalOptions="Center">
+                                            <!-- Giá gốc -->
+                                            <Label FontSize="14" TextColor="#E6EBFF" Opacity="0.9"
+                                   Text="{Binding Price, StringFormat='{}{0:N0} ₫'}"
+                                   TextDecorations="Strikethrough"
+                                   IsVisible="{Binding DiscountPercent, Converter={StaticResource GreaterThanZeroConverter}}"
+                                   HorizontalOptions="Center"
+                                   Shadow="{StaticResource TextShadow}"/>
+                                            <!-- Giá cuối -->
+                                            <Label FontSize="28" FontAttributes="Bold"
+                                   TextColor="White" HorizontalOptions="Center"
+                                   Shadow="{StaticResource TextShadow}">
+                                                <Label.Text>
+                                                    <MultiBinding Converter="{StaticResource DiscountPriceConverter}"
+                                                  StringFormat="{}{0:N0} ₫">
+                                                        <Binding Path="Price"/>
+                                                        <Binding Path="DiscountPercent"/>
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </Grid>
+
+                                    <!-- Chip giảm giá -->
+                                    <Border IsVisible="{Binding DiscountPercent, Converter={StaticResource GreaterThanZeroConverter}}"
+                            BackgroundColor="#FFE666"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 14"
+                            Padding="10,4"
+                            HorizontalOptions="Center" Margin="0,-6,0,0">
+                                        <Label Text="{Binding DiscountPercent, StringFormat='Giảm {0}%'}"
+                               FontSize="12" TextColor="#3A3A3A"/>
+                                    </Border>
+
+                                    <!-- Thời hạn -->
+                                    <Label Text="{Binding DurationMonths, StringFormat='{}{0} THÁNG'}"
+                           FontSize="13" TextColor="#EEF2FF" Opacity="0.95"
+                           HorizontalOptions="Center"/>
+
+                                    <!-- BUY / Active -->
+                                    <Button Text="BUY"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PlanListViewModel}}, Path=BuyPlanCommand}"
+                            CommandParameter="{Binding .}"
+                            FontAttributes="Bold"
+                            TextColor="#111"
+                            BackgroundColor="White"
+                            CornerRadius="16"
+                            HeightRequest="48"
+                            Margin="0,10,0,0"
+                            Shadow="{StaticResource BtnShadow}">
+                                        <Button.Triggers>
+                                            <DataTrigger TargetType="Button" Value="True">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding Converter="{StaticResource EqualsMultiConverter}">
+                                                        <Binding Path="Id"/>
+                                                        <Binding Source="{RelativeSource AncestorType={x:Type viewmodels:PlanListViewModel}}"
+                                                 Path="CurrentPlanId"/>
+                                                    </MultiBinding>
+                                                </DataTrigger.Binding>
+                                                <Setter Property="Text" Value="Bạn đang sử dụng"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                                <Setter Property="BackgroundColor" Value="#ffffffAA"/>
+                                                <Setter Property="TextColor" Value="#2f2f2f"/>
+                                            </DataTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- CHIP: top-center, KHÔNG dùng số trong LayoutBounds (tránh lỗi) -->
+                        <Border AbsoluteLayout.LayoutBounds="0.5,0,AutoSize,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                WidthRequest="{StaticResource ChipSize}"
+                HeightRequest="{StaticResource ChipSize}"
+                StrokeThickness="1"
+                Stroke="{AppThemeBinding Light=#2A2A2A, Dark=#3A3A3A}"
+                BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1f1f21}"
+                StrokeShape="Ellipse"
+                ZIndex="9">
+                            <Label Text="⚡" FontSize="22"
+                   HorizontalOptions="Center" VerticalOptions="Center"
+                   TextColor="{AppThemeBinding Light=#E9E4FF, Dark=#CFCBFF}"/>
+                        </Border>
+
+                    </AbsoluteLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!-- Dots -->
+        <IndicatorView Grid.Row="2"
+                       x:Name="indicators"
+                       HorizontalOptions="Center"
+                       Margin="0,12,0,0"
+                       IndicatorColor="{AppThemeBinding Light=#606770, Dark=#6b7280}"
+                       SelectedIndicatorColor="{AppThemeBinding Light=#111, Dark=#fff}"
+                       MaximumVisible="8"
+                       IndicatorsShape="Circle"/>
+    </Grid>
+</ContentPage>

@@ -20,6 +20,8 @@ namespace ARMauiApp.Configuration
 
             //Card enpoints
             public const string Cart = "v1/cart";
+            public const string Plans = "v1/Plan";
+            public const string PaymentQR = "Payment/generate-plan-payment-qr";
         }
 
         // HTTP Client configuration

@@ -23,6 +23,24 @@
             <local:AllTrueMultiConverter x:Key="AllTrueMultiConverter" />
             <local:GreaterThanOneConverter x:Key="GreaterThanOneConverter" />
             <local:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter" />
+
+            <LinearGradientBrush x:Key="GradientPurple" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#7B5CF6" Offset="0"/>
+                <GradientStop Color="#5A45F0" Offset="0.55"/>
+                <GradientStop Color="#3E2AD6" Offset="1"/>
+            </LinearGradientBrush>
+
+            <LinearGradientBrush x:Key="GradientOrange" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFC36A" Offset="0"/>
+                <GradientStop Color="#FF9F3A" Offset="0.55"/>
+                <GradientStop Color="#FF7A00" Offset="1"/>
+            </LinearGradientBrush>
+
+            <LinearGradientBrush x:Key="GradientAqua" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#59E3E6" Offset="0"/>
+                <GradientStop Color="#58C7F7" Offset="0.55"/>
+                <GradientStop Color="#7C8CFF" Offset="1"/>
+            </LinearGradientBrush>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

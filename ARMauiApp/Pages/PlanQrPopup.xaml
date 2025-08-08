@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup x:Class="ARMauiApp.Pages.PlanQrPopup"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:viewmodels="clr-namespace:ARMauiApp.ViewModels"
+               xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+               x:DataType="viewmodels:PlanQrPopupViewModel">
+
+    <Grid>
+        <!-- Overlay nền mờ -->
+        <BoxView Color="#A0000000" />
+
+        <Frame Padding="24" CornerRadius="32" BackgroundColor="White" HasShadow="True"
+               WidthRequest="355"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+            <VerticalStackLayout Spacing="18">
+
+                <!-- Tiêu đề -->
+                <Label Text="Quét mã QR để thanh toán"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="#1565c0"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,3"/>
+
+                <!-- QR code nổi bật, shadow, bo tròn -->
+                <Frame Padding="0" CornerRadius="24"
+                       BackgroundColor="#e3f1ff"
+                       HasShadow="True"
+                       BorderColor="#b3e0ff"
+                       WidthRequest="230"
+                       HeightRequest="230"
+                       HorizontalOptions="Center">
+                    <!-- Nếu dùng BarcodeGeneratorView -->
+                    <zxing:BarcodeGeneratorView
+                        Value="{Binding QrCode}"
+                        Format="QrCode"
+                        WidthRequest="210"
+                        HeightRequest="210"
+                        HorizontalOptions="Center"/>
+                </Frame>
+
+                <!-- Số tiền -->
+                <Label Text="{Binding Amount, StringFormat='Số tiền: {0:N0}₫'}"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#222"
+                       HorizontalOptions="Center"
+                       Margin="0,7,0,0"/>
+
+                <!-- STK nhận -->
+                <Label Text="{Binding AdminAccountNumber, StringFormat='STK nhận: {0}'}"
+                       FontSize="15"
+                       TextColor="#1976d2"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+
+                <!-- Nội dung chuyển khoản + nút copy -->
+                <Frame Padding="8,4"
+       CornerRadius="14"
+       BackgroundColor="#f7fafd"
+       BorderColor="#b3e0ff"
+       HasShadow="False"
+       HorizontalOptions="Center"
+       Margin="0,0,0,0">
+                    <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="{Binding PaymentContent}"
+               FontSize="15"
+               TextColor="#0277bd"
+               VerticalOptions="Center"
+               LineBreakMode="TailTruncation"
+               MaxLines="1"
+               Margin="0,0,2,0"
+               WidthRequest="190"/>
+                        <!-- Đặt chiều rộng cố định để luôn ellipsis -->
+                        <ImageButton Source="copy_icon.png"
+                     Command="{Binding CopyPaymentContentCommand}"
+                     Padding="3"
+                     WidthRequest="22"
+                     HeightRequest="22"
+                     BackgroundColor="Transparent"
+                     VerticalOptions="Center"
+                     HorizontalOptions="End"/>
+                        <ImageButton Source="expand.png"
+                     Command="{Binding ShowFullContentCommand}"
+                     Padding="3"
+                     WidthRequest="22"
+                     HeightRequest="22"
+                     BackgroundColor="Transparent"
+                     VerticalOptions="Center"
+                     HorizontalOptions="End"/>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <!-- Nhắc nhở nhỏ -->
+                <Label Text="* Vui lòng chuyển khoản đúng nội dung để hệ thống xác thực nhanh"
+                       FontSize="12"
+                       TextColor="#ec6f21"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,4,0,0"/>
+
+                <!-- Nút Đóng -->
+                <Button Text="Đóng"
+                        Command="{Binding CloseCommand}"
+                        BackgroundColor="#0099ff"
+                        TextColor="White"
+                        CornerRadius="14"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Padding="14,7"
+                        Margin="0,8,0,0"/>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</toolkit:Popup>
