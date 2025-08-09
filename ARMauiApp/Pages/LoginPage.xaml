@@ -12,78 +12,92 @@
              Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <Grid RowDefinitions="Auto, *, Auto" Padding="30">
-            
+        <Grid RowDefinitions="Auto,*,Auto" Padding="0" VerticalOptions="Center">
             <!-- Header -->
-            <StackLayout Grid.Row="0" Margin="0,40,0,40">
-                <Label Text="Chào mừng trở lại" 
-                       FontSize="32" 
+            <StackLayout Grid.Row="0" Margin="36,100,0,0" Spacing="0">
+                <Label Text="Đăng nhập"
+                       FontFamily="Raleway"
+                       FontSize="52"
                        FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
-                <Label Text="Đăng nhập vào tài khoản của bạn" 
-                       FontSize="16" 
-                       HorizontalOptions="Center"
-                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" 
-                       Margin="0,10,0,0" />
+                       TextColor="#202020"
+                       HorizontalOptions="Start" />
+                <Label Text="Thật vui khi thấy bạn trở lại!"
+                       FontFamily="Nunito Sans"
+                       FontSize="19"
+                       FontAttributes="None"
+                       TextColor="#202020"
+                       Margin="0,10,0,0"
+                       HorizontalOptions="Start" />
             </StackLayout>
 
             <!-- Login Form -->
-            <StackLayout Grid.Row="1" Spacing="20">
-                
-                <input:FormView Spacing="20">
-                    
-                    <!-- Email -->
+            <StackLayout Grid.Row="1" Margin="0,40,0,0" Spacing="24">
+                <Frame BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57" HorizontalOptions="Center" WidthRequest="380">
                     <material:TextField Title="Email" 
                                        Text="{Binding Email}"
                                        Keyboard="Email"
+                                       FontFamily="Poppins"
+                                       FontSize="14"
+                                       TextColor="#202020"
+                                       CornerRadius="59"
                                        Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Mail}}">
                         <validation:RequiredValidation Message="Email là bắt buộc" />
-                        <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" 
-                                                   Message="Định dạng email không hợp lệ" />
+                        <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Định dạng email không hợp lệ" />
                     </material:TextField>
-
-                    <!-- Password -->
-                    <material:TextField Title="Mật khẩu" 
+                </Frame>
+                <Frame BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57" HorizontalOptions="Center" WidthRequest="380">
+                    <material:TextField Title="Password" 
                                        Text="{Binding Password}"
                                        IsPassword="True"
+                                       FontFamily="Poppins"
+                                       FontSize="14"
+                                       TextColor="#202020"
+                                       CornerRadius="59"
                                        Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Lock}}">
                         <validation:RequiredValidation Message="Mật khẩu là bắt buộc" />
                         <validation:MinLengthValidation MinLength="6" Message="Mật khẩu phải có ít nhất 6 ký tự" />
                     </material:TextField>
+                </Frame>
+                <!-- Next Button -->
+                <Button Text="Đăng nhập"
+                        Command="{Binding LoginCommand}"
+                        IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="#F3F3F3"
+                        CornerRadius="16"
+                        FontFamily="Nunito Sans"
+                        FontSize="22"
+                        HeightRequest="57"
+                        FontAttributes="None"
+                        Margin="0,20,0,0"
+                        HorizontalOptions="Center"
+                        WidthRequest="342">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Text" Value="Đang đăng nhập..." />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
 
-                    <!-- Login Button -->
-                    <Button Text="Đăng nhập" 
-                            Command="{Binding LoginCommand}"
-                            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
-                            StyleClass="FilledButton"
-                            HeightRequest="50"
-                            FontSize="18"
-                            FontAttributes="Bold"
-                            Margin="0,20,0,0">
-                        <Button.Triggers>
-                            <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
-                                <Setter Property="Text" Value="Đang đăng nhập..." />
-                            </DataTrigger>
-                        </Button.Triggers>
-                    </Button>
-
-                </input:FormView>
-
-                <!-- Register Link -->
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,20,0,0">
-                    <Label Text="Chưa có tài khoản?" 
-                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" />
-                    <Label Text="Đăng ký" 
-                           TextColor="{StaticResource Primary}" 
+                <!-- Create Account -->
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="5">
+                    <Label Text="Chưa có tài khoản?"
+                           FontFamily="Montserrat"
+                           FontSize="14"
+                           TextColor="#575757"
+                           VerticalOptions="Center" />
+                    
+                    <Label Text="Đăng ký"
+                           FontFamily="Montserrat"
+                           FontSize="14"
                            FontAttributes="Bold"
-                           Margin="5,0,0,0">
+                           TextColor="{StaticResource Primary}"
+                           VerticalOptions="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigateToRegisterCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
                 </StackLayout>
-
             </StackLayout>
 
             <!-- Loading Indicator -->
@@ -93,7 +107,6 @@
                               Color="{StaticResource Primary}"
                               VerticalOptions="Center"
                               HorizontalOptions="Center" />
-
         </Grid>
     </ScrollView>
 
