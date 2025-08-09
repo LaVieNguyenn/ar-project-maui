@@ -41,6 +41,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<PlanService>();
         builder.Services.AddSingleton<PlanPaymentService>();
         builder.Services.AddSingleton<ITabBadgeService, TabBadgeService>();
+    builder.Services.AddSingleton<IOnboardingService, OnboardingService>();
 
 
 
@@ -78,6 +79,7 @@ public static class MauiProgram
         builder.Services.AddTransient<LoadingPage>();
         builder.Services.AddTransient<PlansPage>();
         builder.Services.AddTransient<PlanQrPopup>();
+    builder.Services.AddTransient<OnboardingPage>();
 
         UnityBridge.Init();
 

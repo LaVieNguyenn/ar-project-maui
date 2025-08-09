@@ -5,9 +5,11 @@ namespace ARMauiApp.Pages;
 
 public partial class SplashPage : ContentPage
 {
-    public SplashPage()
+    private readonly IOnboardingService _onboardingService;
+    public SplashPage(IOnboardingService onboardingService)
     {
         InitializeComponent();
+        _onboardingService = onboardingService;
     }
 
     protected override async void OnAppearing()
@@ -22,6 +24,13 @@ public partial class SplashPage : ContentPage
         {
             // Đợi một chút để splash screen hiển thị
             await Task.Delay(1000);
+
+            // Nếu lần chạy đầu tiên -> vào onboarding
+            if (_onboardingService.IsFirstRun())
+            {
+                await Shell.Current.GoToAsync("//onboarding");
+                return;
+            }
 
             var authService = ServiceHelper.GetService<AuthService>();
 

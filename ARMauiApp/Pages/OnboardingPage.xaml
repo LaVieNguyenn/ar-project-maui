@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ARMauiApp.Pages.OnboardingPage"
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="0">
+        <!-- Top bar: progress and Skip -->
+        <Grid Grid.Row="0" Padding="20,20,20,0" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Start">
+            <Label x:Name="ProgressLabel"
+                   Text="1/5"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#A0A0A1"
+                   VerticalOptions="Center"/>
+            <Button Grid.Column="2"
+                    Text="Bỏ qua"
+                    Clicked="OnSkipClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="#004CFF"
+                    Padding="10,4"
+                    FontAttributes="Bold"/>
+        </Grid>
+
+        <!-- Pages -->
+        <CarouselView x:Name="Carousel"
+                      Grid.Row="1"
+                      Loop="False"
+                      IndicatorView="Indicators">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="24" RowDefinitions="*,Auto,Auto,Auto,*">
+                        <!-- Hero area: gradient background + bound SVG image on top -->
+                        <Frame Grid.Row="1" HasShadow="False" Padding="0" CornerRadius="16" HeightRequest="260">
+                            <Frame.Background>
+                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#623CF4" Offset="0" />
+                                    <GradientStop Color="#18FFFF" Offset="1" />
+                                </LinearGradientBrush>
+                            </Frame.Background>
+                        </Frame>
+                        <Image Grid.Row="1"
+                               Source="{Binding Image}"
+                               HeightRequest="260"
+                               Aspect="AspectFit"
+                               Margin="12" />
+
+                        <!-- Title -->
+                        <Label Grid.Row="2"
+                               Text="{Binding Title}"
+                               Margin="0,24,0,8"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="#000000" />
+
+                        <!-- Description -->
+                        <Label Grid.Row="3"
+                               Text="{Binding Description}"
+                               FontSize="14"
+                               TextColor="#A8A8A9"
+                               HorizontalTextAlignment="Center"
+                               LineBreakMode="WordWrap" />
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!-- Bottom controls: indicators and Next/Start -->
+        <StackLayout Grid.Row="2" Orientation="Vertical" Padding="20,10" Spacing="10">
+            <IndicatorView x:Name="Indicators"
+                           IndicatorColor="#E0E0E0"
+                           SelectedIndicatorColor="#004CFF"
+                           HorizontalOptions="Center" />
+            <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                <ContentView />
+                <Button Grid.Column="1"
+                        x:Name="NextButton"
+                        Text="Tiếp"
+                        Clicked="OnNextClicked"
+                        BackgroundColor="#004CFF"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Padding="20,10" />
+            </Grid>
+        </StackLayout>
+    </Grid>
+</ContentPage>

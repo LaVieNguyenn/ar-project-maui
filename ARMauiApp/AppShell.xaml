@@ -7,6 +7,12 @@
     Title="ARMauiApp"
     FlyoutBehavior="Disabled">
 
+    <!-- Onboarding -->
+    <ShellContent x:Name="OnboardingShell"
+                  Route="onboarding"
+                  ContentTemplate="{DataTemplate pages:OnboardingPage}"
+                  Shell.FlyoutBehavior="Disabled" />
+
     <!-- Splash Screen -->
     <ShellContent x:Name="SplashShell"
                   Route="splash"
