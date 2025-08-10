@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.artryon.exe">
-		<application android:largeHeap="true" android:allowBackup="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:label="ArTryOn" android:networkSecurityConfig="@xml/network_security_config">
+		<application android:largeHeap="true" android:allowBackup="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:label="ArTryOn" >
+		<!-- android:networkSecurityConfig="@xml/network_security_config" -->
 		<activity android:name="com.unity3d.player.UnityPlayerGameActivity">
 			<meta-data android:name="unityplayer.UnityActivity" android:value="true" />
 			<meta-data android:name="notch_support" android:value="true" />
