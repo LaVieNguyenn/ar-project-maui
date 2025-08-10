@@ -18,6 +18,10 @@ namespace ARMauiApp.ViewModels
         [ObservableProperty]
         private ObservableCollection<CategoryDto> categories = new();
 
+        // Promotions for the header carousel
+        [ObservableProperty]
+        private ObservableCollection<PromotionDto> promotions = new();
+
         [ObservableProperty]
         private CategoryDto? selectedCategory;
 
@@ -61,8 +65,8 @@ namespace ARMauiApp.ViewModels
             {
                 var categoryId = SelectedCategory?.Id ?? "";
                 var productList = await _productService.GetProductsAsync(categoryId, SearchText);
-                Products.Clear();
 
+                Products.Clear();
                 foreach (var product in productList)
                 {
                     Products.Add(product);
@@ -111,7 +115,47 @@ namespace ARMauiApp.ViewModels
         public async Task Initialize()
         {
             await LoadCategories();
+            LoadMockPromotions();
             await LoadProducts();
+        }
+
+        private void LoadMockPromotions()
+        {
+            try
+            {
+                Promotions.Clear();
+                Promotions.Add(new PromotionDto
+                {
+                    ImageUrl = "https://snapfeet.io/wp-content/uploads/2023/04/Banner_home_ing_cut.png",
+                    //DiscountText = "50-40% OFF",
+                    //Headline = "Now in (product)",
+                    //Subheadline = "All colours",
+                    //ButtonText = "Shop Now",
+                    TargetCategoryId = string.Empty
+                });
+                Promotions.Add(new PromotionDto
+                {
+                    ImageUrl = "https://tri3d.in/wp-content/uploads/2021/10/Virual-Try-on-banner-1-1400x788.png",
+                    //DiscountText = "Summer Sale",
+                    //Headline = "Best T-Shirts",
+                    //Subheadline = "Up to 30%",
+                    //ButtonText = "Shop Now",
+                    TargetCategoryId = string.Empty
+                });
+                Promotions.Add(new PromotionDto
+                {
+                    ImageUrl = "https://gv-brxm.imgix.net/binaries/_ht_1694432584455/content/gallery/gb-visionexpress/content-pages/offers/new_branding/sun_sale_50_off/sun_sale_offer_banner_d.jpg?fit=fillmax&w=750&h=440&auto=format",
+                    //DiscountText = "New Arrivals",
+                    //Headline = "Trendy Shoes",
+                    //Subheadline = "Fresh Styles",
+                    //ButtonText = "Explore",
+                    TargetCategoryId = string.Empty
+                });
+            }
+            catch
+            {
+                // ignore mock load errors
+            }
         }
 
         private async Task LoadCategories()
@@ -122,7 +166,7 @@ namespace ARMauiApp.ViewModels
                 Categories.Clear();
 
                 // Add "All Categories" option
-                Categories.Add(new CategoryDto { Id = "", Name = "Tất cả", Description = "Hiển thị tất cả sản phẩm" });
+                Categories.Add(new CategoryDto { Id = "", Name = "Tất cả", Description = "Hiển thị tất cả sản phẩm", ImageUrl = "https://t4.ftcdn.net/jpg/03/85/95/63/360_F_385956366_Zih7xDcSLqDxiJRYUfG5ZHNoFCSLMRjm.jpg", IsSelected = true });
 
                 foreach (var category in categoryList)
                 {
@@ -141,7 +185,16 @@ namespace ARMauiApp.ViewModels
         private async Task FilterByCategory(CategoryDto? category)
         {
             if (category == null) return;
+            if (SelectedCategory != null)
+            {
+                SelectedCategory.IsSelected = false;
+            }
+            foreach (var item in Categories)
+            {
+                item.IsSelected = false;
+            }
             SelectedCategory = category;
+            SelectedCategory.IsSelected = true;
             await LoadProducts();
         }
 

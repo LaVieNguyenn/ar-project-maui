@@ -14,6 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
             
             <!-- Add Converters -->
+
             <local:CountToBoolConverter x:Key="CountToBoolConverter" />
             <local:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <local:BoolToActiveStatusConverter x:Key="BoolToActiveStatusConverter" />
@@ -41,6 +42,37 @@
                 <GradientStop Color="#58C7F7" Offset="0.55"/>
                 <GradientStop Color="#7C8CFF" Offset="1"/>
             </LinearGradientBrush>
+
+            <!-- Gradient from SVG: Purple to Cyan -->
+            <LinearGradientBrush x:Key="GradientButton" StartPoint="0,0" EndPoint="1,0">
+                <!-- Tím nhạt sang xanh ngọc -->
+                <GradientStop Color="#7C3AED" Offset="0"/>
+                <!-- Tím tươi -->
+                <GradientStop Color="#6D28D9" Offset="0.25"/>
+                <!-- Tím đậm -->
+                <GradientStop Color="#4F46E5" Offset="0.5"/>
+                <!-- Indigo -->
+                <GradientStop Color="#3B82F6" Offset="0.75"/>
+                <!-- Xanh dương sáng -->
+                <GradientStop Color="#06B6D4" Offset="1"/>
+                <!-- Xanh ngọc -->
+            </LinearGradientBrush>
+
+            <!-- Gradient khi hover -->
+            <LinearGradientBrush x:Key="GradientButtonHover" StartPoint="0,0" EndPoint="1,0">
+                <!-- Tím sáng -->
+                <GradientStop Color="#A78BFA" Offset="0"/>
+                <!-- Tím tươi sáng hơn -->
+                <GradientStop Color="#8B5CF6" Offset="0.25"/>
+                <!-- Tím đậm nhưng sáng -->
+                <GradientStop Color="#6366F1" Offset="0.5"/>
+                <!-- Indigo sáng -->
+                <GradientStop Color="#60A5FA" Offset="0.75"/>
+                <!-- Xanh ngọc sáng -->
+                <GradientStop Color="#22D3EE" Offset="1"/>
+            </LinearGradientBrush>
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

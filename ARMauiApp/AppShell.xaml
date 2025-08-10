@@ -44,17 +44,16 @@
                   ContentTemplate="{DataTemplate pages:CartPage}"
                   Icon="cart.svg" />
 
+        <ShellContent Title="Gói"
+              Route="plans"
+              ContentTemplate="{DataTemplate pages:PlansPage}"
+              Icon="subscription.png" />
+
         <!-- Account Tab -->
         <ShellContent Title="Tài khoản"
                       Route="account"
                       ContentTemplate="{DataTemplate pages:AccountPage}"
                       Icon="user.svg" />
-
-        <ShellContent Title="Gói"
-                      Route="plans"
-                      ContentTemplate="{DataTemplate pages:PlansPage}"
-                      Icon="subscription.png" />
-
     </TabBar>
 
 </Shell>

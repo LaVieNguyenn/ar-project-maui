@@ -8,284 +8,425 @@
              x:Name="ProductsPage"
              Title="">
 
-    <Grid RowDefinitions="Auto, Auto, *" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+    <Grid RowDefinitions="Auto, Auto, Auto, *"
+          BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
 
-        <!-- Search Section với gradient background -->
-        <Frame Grid.Row="0" 
-               BackgroundColor="{StaticResource White}"
-               CornerRadius="0"
-               Padding="0"
-               HasShadow="True">
-            <StackLayout Padding="20,15,20,20">
-                <Image Source="fashion_banner.svg"
-                       HeightRequest="50"
-                       Aspect="AspectFit"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,10" />
-                <!--<Label Text="Khám phá thời trang"
-                       FontSize="24"
-                       FontAttributes="Bold"
-                       TextColor="White"
-                       Margin="0,0,0,15" />-->
-                <Frame BackgroundColor="White"
-                       CornerRadius="25"
-                       Padding="0"
-                       HasShadow="False">
-                    <Entry Placeholder="Tìm kiếm áo, quần, giày..." 
+        <!-- Search Section: clean pill with leading/trailing icons -->
+        <Grid Grid.Row="0"
+              Padding="20,15,20,10"
+              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
+                   CornerRadius="20"
+                   Padding="0"
+                   HasShadow="False">
+                <Grid ColumnDefinitions="Auto,*,Auto"
+                      HeightRequest="44">
+                    <!-- Leading icon -->
+                    <Label Grid.Column="0"
+                           Text="🔍"
+                           FontSize="18"
+                           VerticalOptions="Center"
+                           Margin="14,0"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+
+                    <!-- Entry -->
+                    <Entry Grid.Column="1"
+                           Placeholder="Tìm kiếm áo, quần, giày..."
                            Text="{Binding SearchText}"
                            ReturnCommand="{Binding SearchProductsCommand}"
-                           HeightRequest="50"
                            BackgroundColor="Transparent"
-                           PlaceholderColor="{StaticResource Gray400}"
-                           Margin="20,0" />
-                </Frame>
-            </StackLayout>
-        </Frame>
+                           PlaceholderColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                           FontSize="14"
+                           />
 
-        <!-- Categories Section với design mới -->
-        <StackLayout Grid.Row="1" 
-                     Orientation="Vertical" 
-                     Padding="20,10,20,5"
-                     BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}">
+                    <!-- Trailing action (voice or clear) -->
+                    <Label Grid.Column="2"
+                           Text=""
+                           FontSize="18"
+                           VerticalOptions="Center"
+                           Margin="0,0,14,0"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchProductsCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Frame>
+        </Grid>
+
+        <!-- Categories Section: chips style -->
+        <StackLayout Grid.Row="1"
+                     Orientation="Vertical"
+                     Padding="20,6,20,6"
+                     BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
             <Label Text="Danh mục sản phẩm"
-                   FontSize="16"
+                   FontSize="18"
                    FontAttributes="Bold"
                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                   Margin="0,0,0,10" />
-
+                   Margin="0,0,0,8"/>
             <CollectionView ItemsSource="{Binding Categories}"
-                           SelectionMode="Single"
-                           SelectedItem="{Binding SelectedCategory}"
-                           HeightRequest="80">
-
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedCategory}"
+                            HeightRequest="96">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="12" />
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="12"/>
                 </CollectionView.ItemsLayout>
-
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:CategoryDto">
-                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
-                               HasShadow="False"
-                               CornerRadius="15"
-                               Padding="15,10"
-                               WidthRequest="110"
-                               HeightRequest="70">
-
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProductListViewModel}}, Path=FilterByCategoryCommand}"
-                                                      CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
-
-                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                <Label Text="🏷️"
-                                       FontSize="20"
-                                       HorizontalOptions="Center"
-                                       Margin="0,0,0,5" />
+                        <Grid Padding="0"
+                              RowDefinitions="Auto,Auto"
+                              ColumnDefinitions="Auto"
+                              Background="White">
+                            <!-- Chip avatar -->
+                            <Frame Grid.Row="0"
+                                   Padding="0"
+                                   HasShadow="False"
+                                   IsClippedToBounds="True"
+                                   WidthRequest="56"
+                                   HeightRequest="56"
+                                   CornerRadius="28"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProductListViewModel}}, Path=FilterByCategoryCommand}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                                <Image WidthRequest="56"
+                                       HeightRequest="56"
+                                       Aspect="AspectFill"
+                                       Source="{Binding ImageUrl}"/>
+                            </Frame>
+                            <!-- Chip label -->
+                            <Frame x:Name="ChipFrame"
+                                   Grid.Row="1"
+                                   Padding="10,6"
+                                   HasShadow="False"
+                                   Margin="0,6,0,0"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}">
                                 <Label Text="{Binding Name}"
                                        FontSize="11"
                                        FontAttributes="Bold"
-                                       TextColor="{AppThemeBinding Light={StaticResource Gray800}, Dark=White}"
                                        HorizontalOptions="Center"
                                        HorizontalTextAlignment="Center"
-                                       LineBreakMode="TailTruncation"
-                                       MaxLines="2">
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray800}, Dark=White}">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label"
-                                                 Binding="{Binding IsSelected}"
-                                                 Value="True">
-                                            <Setter Property="TextColor" Value="White" />
+                                                     Binding="{Binding IsSelected}"
+                                                     Value="True">
+                                            <Setter Property="TextColor"
+                                                    Value="White"/>
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
-                            </StackLayout>
 
-                            <Frame.Triggers>
-                                <DataTrigger TargetType="Frame"
-                                           Binding="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProductListViewModel}}, Path=SelectedCategory.Id}"
-                                           Value="{Binding Id}">
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                                </DataTrigger>
-                            </Frame.Triggers>
-
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup Name="CommonStates">
-                                    <VisualState Name="Normal" />
-                                    <VisualState Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-
-                        </Frame>
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame"
+                                                 Binding="{Binding IsSelected}"
+                                                 Value="True">
+                                        <Setter Property="Background" Value="{StaticResource GradientButtonHover}"/>
+                                        <Setter Property="CornerRadius" Value="14"/>
+                                    </DataTrigger>
+                                </Frame.Triggers>
+                            </Frame>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-
             </CollectionView>
         </StackLayout>
+
+        <!-- Banner Section - Tách riêng để luôn hiển thị -->
+        <Grid Grid.Row="2"
+              Padding="15,10,15,0"
+              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+            <Grid RowDefinitions="Auto,Auto">
+                <!-- Swipeable banners -->
+                <CarouselView x:Name="PromoCarousel"
+                              Grid.Row="0"
+                              HeightRequest="100"
+                              ItemsSource="{Binding Promotions}"
+                              IsSwipeEnabled="True"
+                              Loop="True"
+                              IndicatorView="{x:Reference PromoIndicator}">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="models:PromotionDto">
+                            <Border StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}">
+                                <Grid>
+                                    <!-- Background image with caching; fallback handled by trigger -->
+                                    <Image Aspect="AspectFill"
+                                           Opacity="0.98">
+                                        <Image.Source>
+                                            <UriImageSource Uri="{Binding ImageUrl}"
+                                                            CachingEnabled="True"
+                                                            CacheValidity="7.00:00:00"/>
+                                        </Image.Source>
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding ImageUrl}"
+                                                         Value="">
+                                                <Setter Property="Source"
+                                                        Value="fashion_banner.svg"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding ImageUrl}"
+                                                         Value="{x:Null}">
+                                                <Setter Property="Source"
+                                                        Value="fashion_banner.svg"/>
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+
+                                    <!-- Subtle bottom gradient overlay for readability -->
+                                    <Border InputTransparent="True">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                                                 EndPoint="0,1">
+                                                <GradientStop Color="#00000000"
+                                                              Offset="0.0"/>
+                                                <GradientStop Color="#55000000"
+                                                              Offset="1.0"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+
+                                    <!-- Text content -->
+                                    <VerticalStackLayout Padding="16"
+                                                         Spacing="6">
+                                        <Label Text="{Binding DiscountText}"
+                                               FontAttributes="Bold"
+                                               FontSize="20"
+                                               TextColor="White"/>
+                                        <Label Text="{Binding Headline}"
+                                               FontSize="12"
+                                               TextColor="White"/>
+                                        <Label Text="{Binding Subheadline}"
+                                               FontSize="12"
+                                               TextColor="White"
+                                               Margin="0,0,0,6"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+
+                    <!-- Fallback when no Promotions -->
+                    <CarouselView.EmptyView>
+                        <Border StrokeThickness="0"
+                                StrokeShape="RoundRectangle 12"
+                                HeightRequest="100"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}">
+                            <Grid>
+                                <Image Source="fashion_banner.svg"
+                                       Aspect="AspectFill"
+                                       Opacity="0.98"/>
+                                <Border InputTransparent="True">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0"
+                                                             EndPoint="0,1">
+                                            <GradientStop Color="#00000000"
+                                                          Offset="0.0"/>
+                                            <GradientStop Color="#55000000"
+                                                          Offset="1.0"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                                <VerticalStackLayout Padding="16"
+                                                     Spacing="6">
+                                    <Label Text="50-40% OFF"
+                                           FontAttributes="Bold"
+                                           FontSize="20"
+                                           TextColor="White"/>
+                                    <Label Text="Now in (product)"
+                                           FontSize="12"
+                                           TextColor="White"/>
+                                    <Label Text="All colours"
+                                           FontSize="12"
+                                           TextColor="White"
+                                           Margin="0,0,0,6"/>
+                                    <Border StrokeThickness="1"
+                                            Stroke="White"
+                                            StrokeShape="RoundRectangle 6"
+                                            BackgroundColor="#40FFFFFF"
+                                            HorizontalOptions="Start">
+                                        <Grid Padding="12,6">
+                                            <Label Text="Shop Now"
+                                                   FontSize="12"
+                                                   TextColor="White"/>
+                                        </Grid>
+                                    </Border>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </CarouselView.EmptyView>
+                </CarouselView>
+
+                <!-- Dots indicator -->
+                <IndicatorView x:Name="PromoIndicator"
+                               Grid.Row="1"
+                               Margin="0,8,0,0"
+                               HorizontalOptions="Center"
+                               IndicatorColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                               SelectedIndicatorColor="{StaticResource Primary}"/>
+            </Grid>
+        </Grid>
+
         <!-- Products List với design card đẹp -->
-        <RefreshView Grid.Row="2"
+        <RefreshView Grid.Row="3"
                      IsRefreshing="{Binding IsRefreshing}"
                      Command="{Binding RefreshProductsCommand}"
                      BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}"
                      Margin="10,5">
 
             <CollectionView ItemsSource="{Binding Products}"
-                           BackgroundColor="Transparent"
-                           ItemSizingStrategy="MeasureFirstItem">
+                            BackgroundColor="Transparent"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            SelectionMode="None">
 
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" 
-                                     Span="2" 
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="2"
                                      HorizontalItemSpacing="10"
-                                     VerticalItemSpacing="10" />
+                                     VerticalItemSpacing="10"/>
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.EmptyView>
-                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="50">
-                        <Label Text="�️"
+                    <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 Padding="50">
+                        <Label Text="🛍️"
                                FontSize="80"
                                HorizontalOptions="Center"
-                               TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                               TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"/>
                         <Label Text="Không tìm thấy sản phẩm"
                                FontSize="18"
                                FontAttributes="Bold"
                                HorizontalOptions="Center"
                                TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}"
-                               Margin="0,15,0,5" />
+                               Margin="0,15,0,5"/>
                         <Label Text="Hãy thử tìm kiếm với từ khóa khác"
                                FontSize="14"
                                HorizontalOptions="Center"
-                               TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                               TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}"/>
                     </StackLayout>
                 </CollectionView.EmptyView>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:ProductDto">
-                        <Grid Padding="5">
-
+                        <Grid Padding="4">
                             <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
                                    HasShadow="True"
-                                   CornerRadius="15"
+                                   CornerRadius="16"
                                    Padding="0">
 
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference ProductsPage}, Path=BindingContext.ViewProductDetailCommand}"
-                                                          CommandParameter="{Binding .}" />
+                                                          CommandParameter="{Binding .}"/>
                                 </Frame.GestureRecognizers>
 
-                                <Grid RowDefinitions="110, 105" Padding="0" HeightRequest="215">
+                                <Grid RowDefinitions="150, Auto"
+                                      Padding="0">
+                                    <!-- Product Image Section with overlays -->
+                                    <Grid Grid.Row="0">
+                                        <Border StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 16"
+                                                Background="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}">
+                                            <Grid>
+                                                <Image IsVisible="{Binding Images.Count, Converter={StaticResource CountToBoolConverter}}"
+                                                       Aspect="AspectFill">
+                                                    <Image.Source>
+                                                        <Binding Path="Images[0]"/>
+                                                    </Image.Source>
+                                                </Image>
 
-                                    <!-- Product Image Section -->
-                                    <Frame Grid.Row="0" 
-                                           Padding="0"
-                                           HasShadow="False"
-                                           BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}">
-                                        <Grid>
-                                            <!-- Product Image - First from Images list (highest priority) -->
-                                            <Image IsVisible="{Binding Images.Count, Converter={StaticResource CountToBoolConverter}}"
-                                                   Aspect="AspectFill">
-                                                <Image.Source>
-                                                    <Binding Path="Images[0]" />
-                                                </Image.Source>
-                                            </Image>
+                                                <Label Text="👕"
+                                                       FontSize="28"
+                                                       VerticalOptions="Center"
+                                                       HorizontalOptions="Center"
+                                                       IsVisible="{Binding Images.Count, Converter={StaticResource CountToBoolConverter}, ConverterParameter=True}"/>
+                                            </Grid>
+                                        </Border>
 
-                                            <!-- Fallback to Model3D URL if no Images -->
-                                            <!--<Image Source="{Binding Model3DUrl}"
-                                                   Aspect="AspectFill"
-                                                   IsVisible="{Binding Images.Count, Converter={StaticResource CountToBoolConverter}, ConverterParameter=True}" />-->
+                                        <!-- Top-right favorite icon -->
+                                        <!--<Frame Padding="6" CornerRadius="12" HasShadow="False"
+                                               BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray800}}"
+                                               HorizontalOptions="End" VerticalOptions="Start" Margin="8">
+                                            <Label Text="♡" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
+                                        </Frame>-->
 
-                                            <!-- Final fallback placeholder when no images (Model3DUrl will be tried by Image above) -->
-                                            <Label Text="👕"
-                                                   FontSize="28"
-                                                   VerticalOptions="Center"
-                                                   HorizontalOptions="Center"
-                                                   IsVisible="{Binding Images.Count, Converter={StaticResource CountToBoolConverter}, ConverterParameter=True}" />
+                                        <!-- Top-left badge -->
+                                        <Frame
+                                            BackgroundColor="{StaticResource Primary}"
+                                            Background="{StaticResource GradientOrange}"
+                                            CornerRadius="10"
+                                            Padding="6,2"
+                                            HasShadow="False"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Start"
+                                            Margin="8,8,0,0">
+                                            <Label Text="HOT"
+                                                   FontSize="10"
+                                                   FontAttributes="Bold"
+                                                   TextColor="White"/>
+                                        </Frame>
 
-                                            <!-- Discount Badge -->
-                                            <Frame BackgroundColor="{StaticResource Primary}"
-                                                   CornerRadius="8"
-                                                   Padding="5,2"
-                                                   HasShadow="False"
-                                                   VerticalOptions="Start"
-                                                   HorizontalOptions="End"
-                                                   Margin="6">
-                                                <Label Text="HOT"
-                                                       FontSize="7"
-                                                       FontAttributes="Bold"
-                                                       TextColor="White" />
-                                            </Frame>
-                                        </Grid>
-                                    </Frame>
+                                        <!-- Bottom-left rating pill -->
+                                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray800}}"
+                                               CornerRadius="10"
+                                               Padding="6,2"
+                                               HasShadow="False"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="End"
+                                               Margin="8,0,0,8">
+                                            <Label Text="⭐ 4.8"
+                                                   FontSize="10"
+                                                   TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}"/>
+                                        </Frame>
+                                    </Grid>
 
                                     <!-- Product Info Section -->
-                                    <StackLayout Grid.Row="1" Spacing="2" Padding="8,6,8,6">
-
+                                    <VerticalStackLayout Grid.Row="1"
+                                                         Spacing="4"
+                                                         Padding="10,8,10,10">
                                         <Label Text="{Binding Name}"
                                                FontSize="13"
                                                FontAttributes="Bold"
                                                TextColor="{AppThemeBinding Light=Black, Dark=White}"
                                                LineBreakMode="TailTruncation"
-                                               MaxLines="1"
-                                               HeightRequest="16"
-                                               VerticalOptions="Start" />
+                                               MaxLines="1"/>
 
                                         <Label Text="{Binding Description}"
-                                               FontSize="10"
+                                               FontSize="11"
                                                TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"
                                                LineBreakMode="TailTruncation"
-                                               MaxLines="1"
-                                               HeightRequest="12"
-                                               Margin="0,0,0,2"
-                                               VerticalOptions="Start" />
+                                               MaxLines="1"/>
 
-                                        <Grid ColumnDefinitions="*, 50" Margin="0,1,0,2" HeightRequest="20">
-                                            <!--HorizontalOptions="Start"-->
+                                        <Grid ColumnDefinitions="*,*"
+                                              VerticalOptions="Center">
                                             <Label Grid.Column="0"
                                                    Text="{Binding Price, StringFormat='{0:N0} ₫'}"
-                                                   FontSize="13"
+                                                   FontSize="14"
                                                    FontAttributes="Bold"
                                                    TextColor="{StaticResource Primary}"
                                                    VerticalOptions="Center"
-                                                   LineBreakMode="TailTruncation" />
+                                                   LineBreakMode="TailTruncation"/>
 
-                                            <Frame Grid.Column="1"
-                                                   BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray700}}"
-                                                   CornerRadius="6"
-                                                   Padding="3,1"
-                                                   HasShadow="False"
-                                                   HorizontalOptions="End"
-                                                   VerticalOptions="Center"
-                                                   WidthRequest="45"
-                                                   HeightRequest="18">
-                                                <Label Text="⭐ 4.8"
-                                                       FontSize="8"
-                                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"
-                                                       VerticalOptions="Center"
-                                                       HorizontalOptions="Center" />
-                                            </Frame>
+                                            <Button Grid.Column="1"
+                                                    Text="Chi tiết"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProductListViewModel}}, Path=ViewProductDetailCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Background="{StaticResource GradientButton}"
+                                                    TextColor="White"
+                                                    FontSize="11"
+                                                    FontAttributes="Bold"
+                                                    HeightRequest="28"
+                                                    Padding="10,0"
+                                                    CornerRadius="14"/>
                                         </Grid>
-
-                                        <Button Text="Xem chi tiết"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProductListViewModel}}, Path=ViewProductDetailCommand}"
-                                                CommandParameter="{Binding .}"
-                                                BackgroundColor="{StaticResource Primary}"
-                                                TextColor="White"
-                                                FontSize="11"
-                                                FontAttributes="Bold"
-                                                HeightRequest="28"
-                                                Padding="8,0"
-                                                CornerRadius="14"
-                                                Margin="0,4,0,0"
-                                                VerticalOptions="End" />
-
-                                    </StackLayout>
-
+                                    </VerticalStackLayout>
                                 </Grid>
-
                             </Frame>
-
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -295,12 +436,12 @@
         </RefreshView>
 
         <!-- Loading Indicator -->
-        <ActivityIndicator Grid.Row="2"
-                          IsVisible="{Binding IsLoading}"
-                          IsRunning="{Binding IsLoading}"
-                          Color="{StaticResource Primary}"
-                          VerticalOptions="Center"
-                          HorizontalOptions="Center" />
+        <ActivityIndicator Grid.Row="3"
+                           IsVisible="{Binding IsLoading}"
+                           IsRunning="{Binding IsLoading}"
+                           Color="{StaticResource Primary}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
 
     </Grid>
 

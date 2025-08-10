@@ -1,3 +1,4 @@
+﻿using Android.Content.Res;
 using ARMauiApp.Converters;
 using ARMauiApp.Pages;
 using ARMauiApp.Platforms.Android;
@@ -5,6 +6,7 @@ using ARMauiApp.Services;
 using ARMauiApp.Unity;
 using ARMauiApp.ViewModels;
 using CommunityToolkit.Maui;
+using Microsoft.Maui.Handlers;
 using UraniumUI;
 using ZXing.Net.Maui.Controls;
 
@@ -28,6 +30,17 @@ public static class MauiProgram
                 fonts.AddMaterialSymbolsFonts();
             });
 
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(Entry), (handler, view) =>
+        {
+            if (view is Entry)
+            {
+#if ANDROID
+                // Remove underline
+                handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+            }
+        });
+
         builder.Services.AddSingleton<AppShell>();
 
 
@@ -41,7 +54,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<PlanService>();
         builder.Services.AddSingleton<PlanPaymentService>();
         builder.Services.AddSingleton<ITabBadgeService, TabBadgeService>();
-    builder.Services.AddSingleton<IOnboardingService, OnboardingService>();
+        builder.Services.AddSingleton<IOnboardingService, OnboardingService>();
 
 
 
@@ -79,7 +92,7 @@ public static class MauiProgram
         builder.Services.AddTransient<LoadingPage>();
         builder.Services.AddTransient<PlansPage>();
         builder.Services.AddTransient<PlanQrPopup>();
-    builder.Services.AddTransient<OnboardingPage>();
+        builder.Services.AddTransient<OnboardingPage>();
 
         UnityBridge.Init();
 
