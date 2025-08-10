@@ -13,11 +13,21 @@ namespace ARMauiApp.Services
         protected BaseApiService(TokenService tokenService)
         {
             _tokenService = tokenService;
+#if ANDROID && DEBUG
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+            _httpClient = new HttpClient(handler)
+            {
+                BaseAddress = new Uri(ApiConfig.BaseUrl),
+                Timeout = TimeSpan.FromSeconds(ApiConfig.HttpClient.TimeoutSeconds)
+            };
+#else
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri(ApiConfig.BaseUrl),
                 Timeout = TimeSpan.FromSeconds(ApiConfig.HttpClient.TimeoutSeconds)
             };
+#endif
 
             // Add default headers
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "ARMauiApp/1.0");
