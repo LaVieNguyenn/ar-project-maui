@@ -31,6 +31,8 @@ namespace ARMauiApp.ViewModels
 
         [ObservableProperty]
         private bool isLoading = false;
+        public string ConfirmPassword { get; set; } = string.Empty;
+
 
         public List<string> GenderOptions { get; } = new() { "Nam", "Nữ", "Khác" };
 
@@ -87,6 +89,12 @@ namespace ARMauiApp.ViewModels
 
         private bool ValidateInput()
         {
+            if (Password != ConfirmPassword)
+            {
+                Toast.Make("Mật khẩu phải giống nhau").Show();
+            return false;
+}
+
             if (string.IsNullOrWhiteSpace(Username))
             {
                 Toast.Make("Vui lòng nhập tên người dùng").Show();

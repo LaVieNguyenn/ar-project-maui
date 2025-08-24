@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-android</TargetFrameworks>
+		<TargetFramework>net9.0-ios</TargetFramework>
+		<!-- <TargetFrameworks>net9.0-android</TargetFrameworks> -->
 		<!-- Uncomment to also build for other platforms -->
 		<!-- <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks> -->
 		<!-- <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks> -->
@@ -23,10 +24,10 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>AR Product App</ApplicationTitle>
+		<ApplicationTitle>TryOnAr</ApplicationTitle>
 
 		<!-- App identifier -->
-		<ApplicationId>com.arproject.mauiapp</ApplicationId>
+		<ApplicationId>com.exe.fptu</ApplicationId>
 		<ApplicationIdGuid>3C6D9F67-2CB1-4CFE-9A25-8D9E5E5F5B8A</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -34,7 +35,7 @@
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">16.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
@@ -52,13 +53,13 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
-		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Include="Resources\Images\**" />
 		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
@@ -82,11 +83,91 @@
 		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\AndroidBridge\AndroidBridge.csproj">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </ProjectReference>
+	<!-- <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+		<ProjectReference Include="..\AndroidBridge\AndroidBridge.csproj">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</ProjectReference>
+	</ItemGroup> -->
+
+	  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+    <ProjectReference Include="..\IOSBridge\IOSBridge.csproj" />
+  </ItemGroup>
+
+  	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+		<CollectBundleResourcesDependsOn>$(CollectBundleResourcesDependsOn);BundleUnityData</CollectBundleResourcesDependsOn>
+	</PropertyGroup>
+
+<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
+  <BundleIdentifier>com.exe.fptu</BundleIdentifier>  
+  <ProvisioningType>automatic</ProvisioningType>
+  <SigningTeamId>ND4FY7CDYZ</SigningTeamId>                  
+  <CodesignKey>Apple Development</CodesignKey>              
+</PropertyGroup>
+
+<PropertyGroup>
+  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
+  <BundleIdentifier>com.exe.fptu</BundleIdentifier>
+  <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+</PropertyGroup>
+
+	<Target Name="BundleUnityData" BeforeTargets="PrepareForBuild">
+		<ItemGroup>
+			<BundleResource Include="Data\**\*" />
+		</ItemGroup>
+	</Target>
+
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+		<BundleResource Include="Data\boot.config">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\globalgamemanagers">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\globalgamemanagers.assets">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\globalgamemanagers.assets.resS">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\level0">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<!--<BundleResource Include="Data\level0.resS">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>-->
+		<BundleResource Include="Data\Managed\Metadata\global-metadata.dat">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\Managed\mono\4.0\machine.config">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\Managed\Resources\mscorlib.dll-resources.dat">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<!--<BundleResource Include="Data\Raw\UnityServicesProjectConfiguration.json">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>-->
+		<BundleResource Include="Data\Resources\unity_builtin_extra">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\RuntimeInitializeOnLoads.json">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\ScriptingAssemblies.json">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<BundleResource Include="Data\sharedassets0.assets">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>
+		<!--<BundleResource Include="Data\unity default resources">
+			<IsDefaultItem>true</IsDefaultItem>
+		</BundleResource>-->
 	</ItemGroup>
+
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\LoadingPage.xaml">
@@ -100,12 +181,17 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<!--For Debugging -->
-	<!--<PropertyGroup Condition="'$(Configuration)'=='Debug'">
-		<AndroidEnableFastDeployment>false</AndroidEnableFastDeployment>
-		<HotReloadEnabled>false</HotReloadEnabled>
-		<AndroidEnableDebugSymbols>true</AndroidEnableDebugSymbols>
-		<AndroidLinkMode>None</AndroidLinkMode>
-	</PropertyGroup>-->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+  <MauiImage Update="Resources\Images\onboarding_1.svg" BaseSize="260,260" />
+  <MauiImage Update="Resources\Images\onboarding_2.svg" BaseSize="260,260" />
+  <MauiImage Update="Resources\Images\onboarding_3.svg" BaseSize="260,260" />
+  <MauiImage Update="Resources\Images\onboarding_4.svg" BaseSize="260,260" />
+</ItemGroup>
 
+<ItemGroup>
+  <MauiImage Update="Resources/Images/shop.svg"          BaseSize="24,24" />
+  <MauiImage Update="Resources/Images/cart.svg"          BaseSize="24,24" />
+  <MauiImage Update="Resources/Images/subscription.svg"  BaseSize="24,24" />
+  <MauiImage Update="Resources/Images/user.svg"          BaseSize="24,24" />
+</ItemGroup>
 </Project>

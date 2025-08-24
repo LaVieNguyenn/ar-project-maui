@@ -1,43 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-ios17.0</TargetFramework>
-
-    <Nullable>enable</Nullable>
+	  <TargetFrameworks>net9.0-ios</TargetFrameworks>
+	  <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <IsBindingProject>true</IsBindingProject>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
 
     <!--
       Enable trim analyzers for class libraries.
       To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming
     -->
-    <IsTrimmable>true</IsTrimmable>
+    <!--<IsTrimmable>true</IsTrimmable>-->
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+    <MtouchNoSymbolStrip>True</MtouchNoSymbolStrip>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+    <MtouchNoSymbolStrip>True</MtouchNoSymbolStrip>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <NativeReference Include="$(MSBuildThisFileDirectory)NativeLibs/UnityFramework.framework">
+      <Kind>Framework</Kind>
+      <ForceLoad>true</ForceLoad>
+      <IsCxx>true</IsCxx>
+      <SmartLink>false</SmartLink>
+      <LinkerFlags>-ObjC -lc++</LinkerFlags>
+    </NativeReference>
+
+    <NativeReference Include="$(MSBuildThisFileDirectory)NativeLibs/MediaPipeUnity.framework">
+      <Kind>Framework</Kind>
+      <ForceLoad>true</ForceLoad>
+      <IsCxx>true</IsCxx>
+      <SmartLink>false</SmartLink>
+      <LinkerFlags>-ObjC -lc++</LinkerFlags>
+    </NativeReference>
+  </ItemGroup>
 
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
     <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <NativeReference Include="MediaPipeUnity.framework">
-      <Kind>Framework</Kind>
-      <Frameworks></Frameworks>
-      <LinkerFlags></LinkerFlags>
-      <WeakFrameworks></WeakFrameworks>
-		<ForceLoad>True</ForceLoad>
-		<NeedsGccExceptionHandling>False</NeedsGccExceptionHandling>
-      <IsCxx>False</IsCxx>
-      <SmartLink>False</SmartLink>
-    </NativeReference>
-    <NativeReference Include="UnityFramework.framework">
-      <Kind>Framework</Kind>
-      <Frameworks></Frameworks>
-      <LinkerFlags></LinkerFlags>
-      <WeakFrameworks></WeakFrameworks>
-		<ForceLoad>True</ForceLoad>
-		<NeedsGccExceptionHandling>False</NeedsGccExceptionHandling>
-      <IsCxx>False</IsCxx>
-      <SmartLink>False</SmartLink>
-    </NativeReference>
   </ItemGroup>
 </Project>

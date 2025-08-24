@@ -5,7 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:ARMauiApp.Pages"
     Title="ARMauiApp"
-    FlyoutBehavior="Disabled">
+    FlyoutBehavior="Disabled"
+    Visual="Material">
+
+        <Shell.Resources>
+        <Style TargetType="FontImageSource">
+            <Setter Property="Color" Value="Black"/>
+            <Setter Property="Size" Value="20"/>
+        </Style>
+    </Shell.Resources>
+
 
     <!-- Onboarding -->
     <ShellContent x:Name="OnboardingShell"
@@ -30,30 +39,31 @@
                   ContentTemplate="{DataTemplate pages:RegisterPage}"
                   Shell.FlyoutBehavior="Disabled" />
 
-    <!-- Main App Shell with TabBar -->
-    <TabBar x:Name="MainTabBar" Route="main">
-        
-        <!-- Products Tab -->
-        <ShellContent Title="Sản phẩm"
-                      Route="products"
-                      ContentTemplate="{DataTemplate pages:ProductListPage}"
-                      Icon="shop.svg" />
+<TabBar x:Name="MainTabBar" Route="main"
+        Shell.TabBarBackgroundColor="White"
+        Shell.TabBarForegroundColor="Black"
+        Shell.TabBarUnselectedColor="#66000000"
+        Shell.TabBarTitleColor="Black">
 
-        <ShellContent Title="Giỏ hàng"
-                  Route="cart"
-                  ContentTemplate="{DataTemplate pages:CartPage}"
-                  Icon="cart.svg" />
+  <ShellContent Title="Sản phẩm"
+                Route="products"
+                ContentTemplate="{DataTemplate pages:ProductListPage}"
+                Icon="shop" />
 
-        <ShellContent Title="Gói"
-              Route="plans"
-              ContentTemplate="{DataTemplate pages:PlansPage}"
-              Icon="subscription.png" />
+  <ShellContent Title="Giỏ hàng"
+                Route="cart"
+                ContentTemplate="{DataTemplate pages:CartPage}"
+                Icon="cart" />
 
-        <!-- Account Tab -->
-        <ShellContent Title="Tài khoản"
-                      Route="account"
-                      ContentTemplate="{DataTemplate pages:AccountPage}"
-                      Icon="user.svg" />
-    </TabBar>
+  <ShellContent Title="Gói"
+                Route="plans"
+                ContentTemplate="{DataTemplate pages:PlansPage}"
+                Icon="subscription" />
+
+  <ShellContent Title="Tài khoản"
+                Route="account"
+                ContentTemplate="{DataTemplate pages:AccountPage}"
+                Icon="user" />
+</TabBar>
 
 </Shell>

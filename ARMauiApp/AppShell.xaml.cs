@@ -5,30 +5,47 @@ namespace ARMauiApp;
 
 public partial class AppShell : Shell
 {
-    readonly ITabBadgeService _badgeSvc;
-    readonly CartService _cart;
-    const int CartTabIndex = 1;
-    public AppShell(ITabBadgeService badgeSvc, CartService cart)
+    private readonly CartService _cart;
+
+#if ANDROID
+    private readonly ITabBadgeService _badgeSvc;
+    private const int CartTabIndex = 1;
+#endif
+
+    // 👇 Constructor điều kiện theo nền tảng
+    public AppShell(
+        CartService cart
+#if ANDROID
+        , ITabBadgeService badgeSvc
+#endif
+    )
     {
         InitializeComponent();
-        _badgeSvc = badgeSvc;
         _cart = cart;
 
 #if ANDROID
+        _badgeSvc = badgeSvc;
+
         HandlerChanged += (_, __) => ApplyBadge(_cart.LastCount);
-        Loaded += (_, __) => ApplyBadge(_cart.LastCount);
-        Navigated += (_, __) => ApplyBadge(_cart.LastCount);
-        PropertyChanged += (_, e) => { if (e.PropertyName == nameof(CurrentItem)) ApplyBadge(_cart.LastCount); };
-#endif
+        Loaded +=       (_, __) => ApplyBadge(_cart.LastCount);
+        Navigated +=    (_, __) => ApplyBadge(_cart.LastCount);
+        PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(CurrentItem))
+                ApplyBadge(_cart.LastCount);
+        };
+
+        // Lắng nghe thay đổi số lượng giỏ
         _cart.CountChanged += (_, count) => ApplyBadge(count);
 
+        // Refresh lần đầu (có thể gọi API) rồi cập nhật badge
         _ = Task.Run(async () =>
         {
             var count = await _cart.RefreshCountAsync();
             ApplyBadge(count);
         });
 
-#if ANDROID
+        // Deep link từ push/intents: Intent extra "navigate_to"
         MainThread.BeginInvokeOnMainThread(() =>
         {
             var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
@@ -40,8 +57,7 @@ public partial class AppShell : Shell
         });
 #endif
 
-
-        // Register routes for navigation
+        // Đăng ký routes
         Routing.RegisterRoute("productdetail", typeof(ProductDetailPage));
         Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
         Routing.RegisterRoute("editprofile", typeof(EditProfilePage));
@@ -50,7 +66,7 @@ public partial class AppShell : Shell
     }
 
 #if ANDROID
-    void ApplyBadge(int count)
+    private void ApplyBadge(int count)
     {
         if (Handler is null) return;
         Dispatcher.Dispatch(() => _badgeSvc.SetBadge(this, CartTabIndex, count));

@@ -1,3 +1,0 @@
-File timestamp APIs usage:
-	"System.IO.FileSystemInfo::get_LastAccessTime" used in assemblies:		UnityGLTFScripts
-	"System.IO.FileSystemInfo::get_LastAccessTimeUtc" used in assemblies:		UnityGLTFScripts

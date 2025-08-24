@@ -1,6 +1,7 @@
 ﻿using Foundation;
+using Microsoft.Maui;
 
-namespace UnityUaalMaui;
+namespace ARMauiApp;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

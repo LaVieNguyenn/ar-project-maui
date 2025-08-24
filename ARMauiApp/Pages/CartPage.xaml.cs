@@ -1,11 +1,11 @@
-using Android.Util;
 using ARMauiApp.Unity;
 using ARMauiApp.ViewModels;
-using Com.Unity3d.Player;
-#if ANDROID
+#if __ANDROID__
 using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Util;
+using Com.Unity3d.Player;
 #endif
 
 namespace ARMauiApp.Pages
@@ -23,7 +23,9 @@ namespace ARMauiApp.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
+#if ANDROID
             Log.Debug("CartPage", "OnAppearing called");
+#endif            
             _viewModel.RefreshCartCommand.Execute(null);
         }
 

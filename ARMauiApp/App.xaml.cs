@@ -9,6 +9,7 @@ public partial class App : Application
     {
         InitializeComponent();
         MainPage = shell;
+        UserAppTheme = AppTheme.Light;
     }
 
     protected override async void OnStart()

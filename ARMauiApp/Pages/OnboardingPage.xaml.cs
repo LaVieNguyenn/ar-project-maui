@@ -18,22 +18,22 @@ public partial class OnboardingPage : ContentPage
         new() {
             Title = "Chọn sản phẩm",
             Description = "Đa dạng phong cách – Thể hiện cá tính của bạn!\nTừ quần áo, phụ kiện đến giày dép, mọi thứ đã sẵn sàng để bạn phối theo cách riêng.",
-            Image = "onboarding_1.svg"
+            Image = "onboarding_1"
         },
         new() {
             Title = "Công nghệ AR",
             Description = "Tìm kích cỡ hoàn hảo mà không cần thử!\nCông nghệ AR giúp bạn thử sản phẩm ảo, đảm bảo đúng kích cỡ và phong cách trước khi mua.",
-            Image = "onboarding_2.svg"
+            Image = "onboarding_2"
         },
         new() {
             Title = "So sánh giá",
             Description = "So sánh giá, săn ưu đãi tốt nhất!\nTìm sản phẩm yêu thích với mức giá tốt nhất trên nhiều nền tảng.",
-            Image = "onboarding_3.svg"
+            Image = "onboarding_3"
         },
         new() {
             Title = "Bắt đầu",
             Description = "Hãy đăng nhập để tiếp tục trải nghiệm.",
-            Image = "onboarding_4.svg"
+            Image = "onboarding_4"
         },
     };
 

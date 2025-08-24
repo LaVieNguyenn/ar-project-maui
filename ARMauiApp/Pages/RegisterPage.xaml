@@ -1,159 +1,187 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage x:Class="ARMauiApp.Pages.RegisterPage"
-                      xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      xmlns:viewmodels="clr-namespace:ARMauiApp.ViewModels"
-                      x:DataType="viewmodels:RegisterViewModel"
-                      Title="Đăng ký"
-                      Shell.NavBarIsVisible="False">
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             xmlns:viewmodels="clr-namespace:ARMauiApp.ViewModels"
+             x:DataType="viewmodels:RegisterViewModel"
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False"
+             Title="Đăng ký">
 
-       <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource Gray900}}">
-              <Grid RowDefinitions="Auto,*,Auto" Padding="0" VerticalOptions="Center">
-                     <!-- Header -->
-                     <StackLayout Grid.Row="0" Margin="36,0,0,0" Spacing="0">
-                            <Label Text="Tạo tài khoản"
-                                      FontFamily="Raleway"
-                                      FontSize="44"
-                                      FontAttributes="Bold"
-                                      TextColor="#202020"
-                                      HorizontalOptions="Start" />
-                            <Label Text="Tham gia cùng chúng tôi hôm nay!"
-                                      FontFamily="Nunito Sans"
-                                      FontSize="18"
-                                      TextColor="#202020"
-                                      Margin="0,10,0,0"
-                                      HorizontalOptions="Start" />
-                     </StackLayout>
+    <!-- màu dùng cục bộ cho trang -->
+<ContentPage.Resources>
+  <Color x:Key="TextMain">#202020</Color>
+  <Style x:Key="InputStyle" TargetType="material:TextField">
+    <Setter Property="FontFamily" Value="Poppins"/>
+    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="TextColor" Value="{StaticResource TextMain}"/>
+    <Setter Property="CornerRadius" Value="59"/>
+    <Setter Property="HeightRequest" Value="57"/>
+    <Setter Property="BackgroundColor" Value="White"/>
+    <Setter Property="HorizontalOptions" Value="Fill"/>
+  </Style>
+</ContentPage.Resources>
 
-                     <!-- Register Form -->
-                     <StackLayout Grid.Row="1" Margin="0,40,0,0" Spacing="24">
-                            <!-- Username -->
-                            <Frame BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57" HorizontalOptions="Center" WidthRequest="380">
-                                   <Entry Text="{Binding Username}"
-                                             Placeholder="Tên người dùng"
-                                             FontFamily="Poppins"
-                                             FontSize="14"
-                                             TextColor="#202020"
-                                             BackgroundColor="Transparent"
-                                             HeightRequest="57"/>
-                            </Frame>
-                            <!-- Email -->
-                            <Frame BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57" HorizontalOptions="Center" WidthRequest="380">
-                                   <Entry Text="{Binding Email}"
-                                             Keyboard="Email"
-                                             Placeholder="Email"
-                                             FontFamily="Poppins"
-                                             FontSize="14"
-                                             TextColor="#202020"
-                                             BackgroundColor="Transparent"
-                                             HeightRequest="57"/>
-                            </Frame>
-                            <!-- Birthday -->
-                            <Frame BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57" HorizontalOptions="Center" WidthRequest="380">
-                                   <DatePicker Date="{Binding Birthday}"
-                                                        Format="dd/MM/yyyy"
-                                                        MinimumDate="01/01/1950"
-                                                        MaximumDate="{Binding MaxBirthday}"
-                                                        FontFamily="Poppins"
-                                                        FontSize="14"
-                                                        TextColor="#202020"
-                                                        BackgroundColor="Transparent"
-                                                        HeightRequest="57"/>
-                            </Frame>
-                            <!-- Password -->
-                            <Frame BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57" HorizontalOptions="Center" WidthRequest="380">
-                                   <Entry Text="{Binding Password}"
-                                             IsPassword="True"
-                                             Placeholder="Mật khẩu (tối thiểu 6 ký tự)"
-                                             FontFamily="Poppins"
-                                             FontSize="14"
-                                             TextColor="#202020"
-                                             BackgroundColor="Transparent"
-                                             HeightRequest="57"/>
-                            </Frame>
-                            <!-- Gender -->
-                            <Frame BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57" HorizontalOptions="Center" WidthRequest="380">
-                                   <Picker ItemsSource="{Binding GenderOptions}"
-                                                 SelectedIndex="{Binding SelectedGender}"
-                                                 FontFamily="Poppins"
-                                                 FontSize="14"
-                                                 TextColor="#202020"
-                                                 BackgroundColor="Transparent"
-                                                 HeightRequest="57"/>
-                            </Frame>
-                            <!-- Height & Weight Row -->
-                            <Grid ColumnDefinitions="*,*" ColumnSpacing="15" HorizontalOptions="Center" WidthRequest="380">
-                                   <!-- Height -->
-                                   <Frame Grid.Column="0" BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57">
-                                          <Entry Text="{Binding Height}"
-                                                    Keyboard="Numeric"
-                                                    Placeholder="Chiều cao (cm)"
-                                                    FontFamily="Poppins"
-                                                    FontSize="14"
-                                                    TextColor="#202020"
-                                                    BackgroundColor="Transparent"
-                                                    HeightRequest="57"/>
-                                   </Frame>
-                                   <!-- Weight -->
-                                   <Frame Grid.Column="1" BorderColor="White" BackgroundColor="Transparent" Padding="20,0" HasShadow="False" HeightRequest="57">
-                                          <Entry Text="{Binding Weight}"
-                                                    Keyboard="Numeric"
-                                                    Placeholder="Cân nặng (kg)"
-                                                    FontFamily="Poppins"
-                                                    FontSize="14"
-                                                    TextColor="#202020"
-                                                    BackgroundColor="Transparent"
-                                                    HeightRequest="57"/>
-                                   </Frame>
-                            </Grid>
-                            <!-- Register Button -->
-                            <Button Text="Tạo tài khoản"
-                                          Command="{Binding RegisterCommand}"
-                                          IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
-                                          BackgroundColor="{StaticResource Primary}"
-                                          TextColor="#F3F3F3"
-                                          CornerRadius="16"
-                                          FontFamily="Nunito Sans"
-                                          FontSize="22"
-                                          HeightRequest="57"
-                                          FontAttributes="None"
-                                          Margin="0,20,0,0"
-                                          HorizontalOptions="Center"
-                                          WidthRequest="342">
-                                   <Button.Triggers>
-                                          <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
-                                                 <Setter Property="Text" Value="Đang đăng ký..." />
-                                          </DataTrigger>
-                                   </Button.Triggers>
-                            </Button>
-                     </StackLayout>
 
-                     <!-- Loading Indicator -->
-                     <ActivityIndicator Grid.Row="1"
-                                                   IsVisible="{Binding IsLoading}"
-                                                   IsRunning="{Binding IsLoading}"
-                                                   Color="{StaticResource Primary}"
-                                                   VerticalOptions="Center"
-                                                   HorizontalOptions="Center" />
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*,Auto" Padding="0" VerticalOptions="Center">
 
-                     <!-- Login Link -->
-                     <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="5">
-                            <Label Text="Đã có tài khoản?"
-                                      FontFamily="Montserrat"
-                                      FontSize="14"
-                                      TextColor="#575757"
-                                      VerticalOptions="Center" />
-                            <Label Text="Đăng nhập"
-                                      FontFamily="Montserrat"
-                                      FontSize="14"
-                                      FontAttributes="Bold"
-                                      TextColor="{StaticResource Primary}"
-                                      VerticalOptions="Center">
-                                   <Label.GestureRecognizers>
-                                          <TapGestureRecognizer Command="{Binding NavigateToLoginCommand}" />
-                                   </Label.GestureRecognizers>
-                            </Label>
-                     </StackLayout>
-              </Grid>
-       </ScrollView>
+            <!-- Header -->
+            <StackLayout Grid.Row="0" Margin="36,80,0,0" Spacing="0">
+                <Label Text="Tạo tài khoản"
+                       FontFamily="Raleway"
+                       FontSize="52"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource TextMain}" />
+                <Label Text="Tham gia cùng chúng tôi hôm nay!"
+                       FontFamily="Nunito Sans"
+                       FontSize="19"
+                       TextColor="{StaticResource TextMain}"
+                       Margin="0,10,0,0"/>
+            </StackLayout>
+
+<!-- Giới hạn bề ngang và căn giữa toàn form -->
+<ContentView Grid.Row="1" HorizontalOptions="Center" MaximumWidthRequest="380">
+  <VerticalStackLayout Spacing="18">
+
+    <!-- Username -->
+    <material:TextField Style="{StaticResource InputStyle}"
+                        Title="Tên người dùng"
+                        Text="{Binding Username}"
+                        Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Person}}">
+      <validation:RequiredValidation Message="Tên người dùng là bắt buộc"/>
+    </material:TextField>
+
+    <!-- Email -->
+    <material:TextField Style="{StaticResource InputStyle}"
+                        Title="Email"
+                        Keyboard="Email"
+                        Text="{Binding Email}"
+                        Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Mail}}">
+      <validation:RequiredValidation Message="Email là bắt buộc"/>
+    </material:TextField>
+
+    <!-- Mật khẩu -->
+    <material:TextField x:Name="PasswordField"
+                        Style="{StaticResource InputStyle}"
+                        Title="Mật khẩu (tối thiểu 6 ký tự)"
+                        Text="{Binding Password}"
+                        IsPassword="True"
+                        Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Lock}}">
+      <validation:RequiredValidation Message="Mật khẩu là bắt buộc"/>
+      <validation:MinLengthValidation MinLength="6" Message="Tối thiểu 6 ký tự"/>
+    </material:TextField>
+
+    <!-- Xác nhận mật khẩu -->
+    <material:TextField x:Name="ConfirmField"
+                        Style="{StaticResource InputStyle}"
+                        Title="Xác nhận mật khẩu"
+                        Text="{Binding ConfirmPassword}"
+                        IsPassword="True"
+                        Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Lock}}">
+      <validation:RequiredValidation Message="Vui lòng xác nhận mật khẩu"/>
+    </material:TextField>
+
+    <!-- Ngày sinh | Giới tính (cùng hàng) -->
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+      <!-- Ngày sinh -->
+      <material:TextField Grid.Column="0"
+                          Style="{StaticResource InputStyle}"
+                          Title="Ngày sinh"
+                          Text="{Binding Source={x:Reference BirthPicker}, Path=Date, StringFormat='{0:dd/MM/yyyy}'}"
+                          IsReadOnly="True"
+                          Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Event}}">
+        <material:TextField.GestureRecognizers>
+          <TapGestureRecognizer Tapped="OpenBirthPicker"/>
+        </material:TextField.GestureRecognizers>
+      </material:TextField>
+
+      <!-- Giới tính -->
+      <material:TextField Grid.Column="1"
+                          Style="{StaticResource InputStyle}"
+                          Title="Giới tính"
+                          Text="{Binding Source={x:Reference GenderPicker}, Path=SelectedItem}"
+                          IsReadOnly="True"
+                          Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Person}}">
+        <material:TextField.GestureRecognizers>
+          <TapGestureRecognizer Tapped="OpenGenderPicker"/>
+        </material:TextField.GestureRecognizers>
+      </material:TextField>
+    </Grid>
+
+    <!-- Pickers ẩn -->
+    <DatePicker x:Name="BirthPicker"
+                IsVisible="False"
+                Date="{Binding Birthday}"
+                MinimumDate="1950-01-01"
+                MaximumDate="{Binding MaxBirthday}" />
+    <Picker x:Name="GenderPicker"
+            IsVisible="False"
+            ItemsSource="{Binding GenderOptions}"
+            SelectedIndex="{Binding SelectedGender}" />
+
+    <!-- Chiều cao | Cân nặng giữ nguyên -->
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+      <material:TextField Grid.Column="0" Style="{StaticResource InputStyle}"
+                          Title="Chiều cao (cm)" Keyboard="Numeric"
+                          Text="{Binding Height}"
+                          Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Height}}"/>
+      <material:TextField Grid.Column="1" Style="{StaticResource InputStyle}"
+                          Title="Cân nặng (kg)" Keyboard="Numeric"
+                          Text="{Binding Weight}"
+                          Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Scale}}"/>
+    </Grid>
+                <!-- Register -->
+                <Button Text="Tạo tài khoản"
+                        Command="{Binding RegisterCommand}"
+                        IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="#F3F3F3"
+                        CornerRadius="16"
+                        FontFamily="Nunito Sans"
+                        FontSize="22"
+                        HeightRequest="57"
+                        Margin="0,12,0,0"
+                        HorizontalOptions="Center"
+                        WidthRequest="342">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Text" Value="Đang đăng ký..." />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <!-- Login link -->
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0" Spacing="5">
+                    <Label Text="Đã có tài khoản?"
+                           FontFamily="Montserrat"
+                           FontSize="14"
+                           TextColor="#575757"
+                           VerticalOptions="Center" />
+                    <Label Text="Đăng nhập"
+                           FontFamily="Montserrat"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Primary}"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToLoginCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+  </VerticalStackLayout>
+</ContentView>
+
+            <!-- loading overlay -->
+            <ActivityIndicator Grid.Row="1"
+                               IsVisible="{Binding IsLoading}"
+                               IsRunning="{Binding IsLoading}"
+                               Color="{StaticResource Primary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" />
+        </Grid>
+    </ScrollView>
 </ContentPage>

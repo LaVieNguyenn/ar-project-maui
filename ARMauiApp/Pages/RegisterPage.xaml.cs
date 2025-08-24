@@ -9,4 +9,7 @@ public partial class RegisterPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+    private void OpenBirthPicker(object sender, TappedEventArgs e)  => BirthPicker.Focus();
+private void OpenGenderPicker(object sender, TappedEventArgs e) => GenderPicker.Focus();
+
 }

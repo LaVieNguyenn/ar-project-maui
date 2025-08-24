@@ -1,6 +1,7 @@
 ﻿using ARMauiApp.Models;
 using ARMauiApp.Services;
 using ARMauiApp;
+using ARMauiApp.Unity;
 
 public partial class CartViewModel : ObservableObject
 {
@@ -126,13 +127,32 @@ public partial class CartViewModel : ObservableObject
             await Shell.Current.DisplayAlert("Thông báo", "Không có sản phẩm nào có Model3DUrl!", "OK");
             return;
         }
-
-#if ANDROID
         var accessoryNames = string.Join(",", accessories);
+#if ANDROID
         var intent = new Android.Content.Intent(Platform.CurrentActivity, typeof(UnityActivity));
         intent.AddFlags(Android.Content.ActivityFlags.ReorderToFront);
         intent.PutExtra("accessoryName", accessoryNames);
         Platform.CurrentActivity.StartActivity(intent);
+#else
+#if __IOS__
+        try
+        {
+INativeUnityBridge nativeUnityBridge = new UnityBridge_iOS();
+nativeUnityBridge.SendContent("ReceiveContent", accessoryNames);
+        }
+        catch (System.Exception e)
+        {
+            System.Diagnostics.Debug.WriteLine($"[iOS UAAL] {e}");
+            await Shell.Current.DisplayAlert("ERROR", "CAN NOT START UNITY", "OK");
+            IsTryOnEnabled = true; // bật lại nếu lỗi
+        }
+#else
+        await Shell.Current.DisplayAlert("ERROR", "NOT SUPPORTED", "OK");
 #endif
+#endif
+    }
+        public void OnUnityCameBack()
+    {
+        IsTryOnEnabled = true;  // mở lại nút khi đã quay về MAUI
     }
 }
